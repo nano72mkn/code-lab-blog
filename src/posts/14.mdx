@@ -1,0 +1,48 @@
+---
+title: "Next.js を 10 から 11 へあげてみたのと他にもちょっと"
+published: true
+date: "2021-07-04"
+tags: ["日記", "nextjs"]
+---
+
+# Next.jsを11へあげたよ
+このブログのNext.jsを10から11へ移行してみました。  
+
+基本的には [Next.js公式 の Upgrade Guide](https://nextjs.org/docs/upgrading)を参考にすれば問題なく11へ移行できました
+
+一点だけ、下記エラーが出てしまいましたが`npm i`するだけで解消したのでNext.jsさすがだなって感じです。
+```
+To use ESLint, additional required package(s) must be installed.
+
+Please install eslint-config-next by running:
+
+        npm install --save-dev eslint-config-next
+
+If you do not want to run ESLint during builds, disable it in next.config.js. See https://nextjs.org/docs/api-reference/next.config.js/ignoring-eslint
+```
+
+
+# next/imageのwidth/height問題
+
+公式では`layout={'fill'}`を使えとあるのですが、それだけだと画面いっぱいに表示される...（ぼくだけなのか?）  
+解決策としては、
+
+- `position={'relative'}`で囲ってあげる
+- `objectFit={'contain'}`を付与する
+
+の二点になってくるのかなと思っています。  
+（自分のブログで確認中....問題なさそうだけどあまり綺麗じゃない）
+
+```typescript
+<Box
+  position={'relative'}
+  width={1}
+  height={{ xs: 200, sm: 300, md: 500 }}
+  marginY={5}
+>
+  <Image src={src} alt={alt} layout={'fill'} objectFit={'contain'} />
+</Box>
+```
+
+ここら辺の解決策はもっと考えていきたいなと思っています
+

@@ -1,0 +1,58 @@
+---
+title: "ReactNativeの開発環境メモ３ - husky & lint-staged編"
+published: true
+date: "2021-05-07"
+tags: ["reactnative", "husky", "lint-staged"]
+---
+
+## husky & lint-stagedについて
+| プラグイン名 | 説明 |
+| ---- | ---- |
+| husky | gitのコミットやpushにフックしてlintなどを走らせるプラグイン |
+| lint-staged | lintを強制的に行って、エラーなどがあれば弾いてくれる。 |
+
+`husky`で`commit`を検知して`lint-staged`で`lint`を強制的に走らせ、エラーがあれば弾く
+これで、バグになり得る元から排除できるよねーという試み。
+
+
+
+## husky & lint-staged追加
+```
+$ yarn add -D husky lint-staged
+```
+
+## huskyの導入
+```
+$ npx husky-init && yarn
+```
+↑これ実行でおわり
+
+参考：https://typicode.github.io/husky/#/?id=yarn-2
+
+
+
+## lint-stagedの導入
+
+### package.jsonに追記
+```
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --fix './src/**/*.{js,ts,tsx}'",
+      "prettier --write './src/**/*.{js,ts,tsx}'"
+    ]
+  }
+```
+これで`yarn lint-staged`で実行されます。
+
+### .husky/pre-commit を修正
+`husky` の導入時に生成された **.husky/pre-commit** を下記に変更
+
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+yarn lint-staged
+```
+
+## おわり
+これで、`git commit`時に`eslint`と`prettier`が実行されます

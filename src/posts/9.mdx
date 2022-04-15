@@ -1,0 +1,110 @@
+---
+title: "bundleサイズが80%削減されたFireBaseのベータ版を使用してみた"
+published: true
+date: "2021-05-22"
+tags: ["firebase"]
+---
+
+少し前にTwitterで見かけた[この動画（Reducing bundle size: Previewing a new Firebase for the web | Session）](https://www.youtube.com/watch?v=r5eJQ3nPc6A)をみたので、早速使ってるfirebaseをこのbeta版に差し替えてみたいと思います。
+
+
+
+# 差し替えていくぅ
+## npm install
+
+動画の説明通りにexpでinstallする
+
+```
+$ npm i -S firebase@exp
+```
+
+そして、`import firebase from 'firebase/app';`とお別れするだけ。
+
+```javascript:firebase.ts
+import { FirebaseOptions, initializeApp } from 'firebase/app';
+
+const firebaseConfig: FirebaseOptions = { ... };
+
+export const firebaseApp = initializeApp(firebaseConfig);
+```
+
+基本はこんな感じ。  
+ただ、firebaseのinitだけでは使えないのでAuthもinitします。
+
+今までであれば、`import 'firebase/auth'`を追加するだけでしたが、こんんかいは少し変わって
+
+```javascript:firebase.ts
+import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { initializeAuth } from 'firebase/auth';
+
+const firebaseConfig: FirebaseOptions = { ... };
+
+export const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseAuth = initializeAuth(firebaseApp);
+```
+
+firebaseをちょこっとつかうなら、こんな感じです。
+
+## エラーに出会う
+nextjsで実装しているので、サンプルのように上記のままでは使えませんでした。  
+firebaseあるあると言いますか、実装するたびに前回の記憶なくなってるので毎度お世話になっているエラー。
+
+```
+FirebaseError: Firebase: Firebase App named '[DEFAULT]' already exists (app/duplicate-app).
+```
+
+こいつ。  
+内容的には、「何回も初期化すんな！」と怒られているわけです。
+
+```javascript
+import firebase from 'firebase/app';
+...
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
+```
+
+いままでは、このようにappsの数をみてまだ初期化されてないねって確認して`initializeApp`をしてました。
+今回はちょっと変わって、`firebase.apps.length`はないですが`getApps`が追加されているので
+
+```javascript:firebase.ts
+import { FirebaseOptions, getApp, getApps, initializeApp } from 'firebase/app';
+import { getAuth, initializeAuth } from 'firebase/auth';
+
+const firebaseConfig: FirebaseOptions = { ... };
+
+export const firebaseApp =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
+export const firebaseAuth = getAuth(firebaseApp) || initializeAuth(firebaseApp);
+```
+
+こんな感じで`getApps`が`firebase.apps`の役割をしています。
+さらに、authでも同じように何回も初期化してるとおもられるので`getAuth(firebaseApp)`であればそのまま、なければ初期化してねというようにしました。
+
+とりあえず、これで動きました。
+
+## 本日の目玉
+では、今回のアップデートで注目されているbundle sizeですが....
+
+
+```javascript:変更前のファイルサイズ
+Page                              Size     First Load JS
+...
++ First Load JS shared by all     199 kB
+...
+```
+
+```javascript:変更後のファイルサイズ
+Page                              Size     First Load JS
+...
++ First Load JS shared by all     159 kB
+...
+```
+
+40kBも減らすことができました！  
+最高ですね！  
+
+# まとめ
+
+まだbeta版なので、実務で導入というのはできそうにないですが、趣味の範囲では採用していこうと思っています！

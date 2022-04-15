@@ -1,0 +1,111 @@
+---
+title: "Next.jsのinitializeをしてみた"
+published: true
+date: "2021-06-03"
+tags: ["nextjs", "storybook", "prettier", "react"]
+---
+
+## 今回設定するもの
+
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- ESLint
+- Prettier
+- StoryBook
+
+
+一応、完成品は[こちら](https://github.com/shota1995m/nextjs_boilerplate)
+
+## 設定をしていく
+
+### Next.js
+
+```
+$ npx create-next-app --typescript --use-npm
+```
+
+`create-next-app` は久しぶりに実行する際はinstallしといた方が良いかと  
+
+npmを使いたいのでオプションで`--use-npm`を指定しています
+付けなかった場合はyarnが指定されているのでnpm派の方はつけるように
+ちなみに、毎度忘れて作り直してます
+
+`--typescript`を付与しているので、typescript対応も同時に完了です。
+
+
+### ESLint
+nextjs11からnext lintが使用できます。
+
+```
+$ npx next lint
+To use ESLint, additional required package(s) must be installed.
+
+Please install eslint and eslint-config-next by running:
+
+        npm install --save-dev eslint eslint-config-next
+
+Once installed, run next lint again.
+```
+
+何個か入れろって言われたのでinstallします
+
+```
+$ npm install --save-dev eslint eslint-config-next
+```
+
+package.json に`next lint`を追加します
+```js:package.json
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+```
+
+`npm run lint`でlintが動くようになりました。
+
+参考：https://nextjs.org/docs/basic-features/eslint
+
+### Prettier
+
+[ReactNativeの開発環境メモ２ - Prettier編](/blog/4) の時と同じ設定で使います
+
+```js:.prettierrc
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "parser": "typescript",
+  "filepath": "./src/**/*.{ts,tsx}"
+}
+```
+
+### StoryBook
+これは好みですが、自分は入れておきます！！  
+
+```
+$ npx -p @storybook/cli sb init --type react_scripts
+```
+
+いろいろ生成されますが、storiesディレクトリは空にしておきます（いらないのでw）
+
+### husky & lint-staged
+
+最後に`husky`と`lint-staged`をついか
+下記の記事参考にそのまんま実装....!!!
+
+[ReactNativeの開発環境メモ３ - husky & lint-staged編](/blog/5)
+
+と行きたかったのですが、npmを使っているので`huskyの導入`のとこは下記にします
+```
+$ npx husky-init && npm install
+```
+
+# まとめ
+
+いったんおわり。
+
+最終的に、`Prettier`と`StoryBook`しか追加してないような.....???
+
+今後`material-ui`とか入れておいた方がいいかなって物が出てきたら追加します！

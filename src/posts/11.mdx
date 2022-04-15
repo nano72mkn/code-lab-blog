@@ -1,0 +1,227 @@
+---
+title: "Next.jsのISRをVercelを使わずに実装する"
+published: true
+date: "2021-06-01"
+tags: ["nextjs", "npm", "aws"]
+---
+
+今回は、`Next.jsのISRをVercelを使わずに実装する`ということで
+Vercelを使えば一発ですがVercelを使わないで実装はできるのかやっていきます。
+
+ざっと調べた感じ、キーワードとしては
+
+1. next.js
+2. serverless-nextjs
+3. AWS CLI
+
+でした。 
+AWSはちょっと触ったことがある初心者です。  
+結構難易度高そうだなと思いつつやっていきます。
+
+## 導入していく
+
+### next.jsをinit
+
+```
+$ npx create-next-app --example with-typescript-eslint-jest with-typescript-eslint-jest-app --use-npm
+```
+
+### Serverless Framworkを導入
+
+まずは、`Serverless Framework`をinstall
+`global`に入れるように書いてあるけど、プロジェクトに含めてみた。
+
+```
+$ npm install -D serverless
+```
+
+確認
+
+```
+$ npx serverless --version
+Framework Core: 2.44.0 (local)
+Plugin: 5.2.0
+SDK: 4.2.3
+Components: 3.11.0
+```
+
+### AWS CLI の設定する
+
+次の工程調べてたら、AWS CLIの設定いろいろしなきゃみたいだった。
+とりあえず、AWSアカウントを作成して設定してみる（まじで初心者）
+
+#### aws configure
+`aws configure`を実行
+
+```
+$ aws configure
+AWS Access Key ID [None]:
+```
+
+Access Keyを聞かれたので、AWSのcliについて調べる....
+
+>アクセスキーはアクセスキー ID と秘密アクセスキーからなり、AWS に対するプログラムによるリクエストに署名するときに使用されます。アクセスキーがない場合は、AWS マネジメントコンソールから作成できます。ベストプラクティスとして、不必要なタスクでは、AWS アカウントのルートユーザーアクセスキーを使用しないでください。代わりに、ご自身のアクセスキーを持つ新しい管理者 IAM ユーザーを作成します 。 
+
+[アクセスキー ID とシークレットアクセスキー](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-creds)
+
+これですね。
+`IAM`でユーザー作ろうねってことみたいです。
+
+
+#### ポリシーの作成
+ポリシーの作成で必要な権限を設定.....
+
+必要な権限については[AWS Permissions for deployment](https://github.com/serverless-nextjs/serverless-next.js#aws-permissions-for-deployment)を参考にしていきます
+
+`sqs`の権限はISRを使うときは必須なので、今回は追加しています。
+
+#### ユーザーグループの作成
+
+適当に名前をつけて、先ほど作成したポリシーを選択し保存  
+基本的にカスタムドメインで必要なもの以外選択しました
+
+#### ユーザーの作成
+
+1. ユーザー名を適当に決める
+2. アクセスの種類は`プログラムによるアクセス`
+3. `次のステップへ`
+4. 先ほど作ったユーザーグループを指定
+5. `次のステップへ`
+6. タグはつけず`次のステップへ`
+7. 問題なければ`ユーザーの作成`を押して完了です
+
+生成された`Access Key`と`Secret Access Key`をコピーしておいて...
+
+
+#### 再度`aws configure`する
+
+```
+$ aws configure
+```
+
+`Access Key`と`Secret Access Key`を貼り付けて、あとはデフォのままenter  
+多分、よくわからなかったら調べなさいと言われるだろうけど、とりあえず動かしたいってモチベなので....
+
+```
+$ export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXX
+$ export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+そして、exportも設定してここは完了です！
+
+### Serverless Next.js Componentを導入
+
+`serverless.yaml`を作成し...
+
+```js:serverless.yaml
+myApp:
+  component: '@sls-next/serverless-component@1.20.0-alpha.4'
+```
+
+componentを指定する
+今回はISR対応したいので`@sls-next/serverless-component@1.20.0-alpha.4`を指定
+
+### いったんデプロイしてみる
+
+なんか、`serverless.yaml`に`inputs`を指定しているところが多いのですが、`Zero-config`を掲げてたと思うのでいけるんじゃない？という気持ちでやっちゃいます。
+
+好奇心だいじ
+
+```
+$ npx serverless
+```
+
+色々デプロイされ....
+
+```
+
+  myApp: 
+    appUrl:         https://********.cloudfront.net
+    bucketName:    ********
+    distributionId: ********
+
+  ******************************************************************************************************************************************************************
+  Warning: You are using the beta version of Serverless Components. Please migrate to the GA version for enhanced features: https://github.com/serverless/components
+  ******************************************************************************************************************************************************************
+
+
+  37s › myApp › done
+```
+Warningでてますが、ISR対応がまだベータ版なのでしかたなしですね。
+
+
+### ISR対応して確認していく
+
+まずは、`test/isr.tsx`を作成
+
+```js:test/isr.tsx
+import React from 'react'
+import { GetStaticProps } from 'next'
+
+interface Props {
+  date: Date
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      date: new Date().toLocaleString(),
+    },
+    revalidate: 5,
+  }
+}
+
+const Isr: React.VFC<Props> = ({ date }) => <p>{date}</p>
+
+export default Isr
+
+```
+
+### デプロイ
+
+```
+503 ERROR
+The request could not be satisfied.
+```
+
+503エラーでました。
+ふて寝しそうです。
+
+
+オーマイオーマイ...  
+見落としてました権限も修正しないとですね  
+sqsのところが`*`になってますね
+
+参考：https://github.com/serverless-nextjs/serverless-next.js/pull/1028/files/75862600800bc6d4c22fffbc046e0ad919c8e328#diff-b335630551682c19a781afebcf4d07bf978fb1f8ac04c6bf87428ed5106870f5
+
+オーマイオーマイ...
+もうこれでしたねしっかりと問題として上がってますね
+
+> Sure, let me take a look at the logs and let you know what happened
+> EDIT: looks like the Lambda itself doesn't have permissions to access SQS endpoint:
+> ```
+> {
+>     "errorType": "AccessDenied",
+>     "errorMessage": "Access to the resource https://sqs.us-east-1.amazonaws.com/ is denied.",
+> ....
+> ```
+> I'll fix but we should also make sure to mention in Readme to give the Lambda itself permissions to access SQS (if it > > wasn't obvious or already done)
+
+参考：https://github.com/serverless-nextjs/serverless-next.js/pull/1028#issuecomment-840797929
+
+
+最終的に、CloudFront / SQS / Lambdaなどなど削除し、プロジェクト内の`.serverless`を削除してから
+再度デプロイしたら正常に権限が適用され、問題なく動作することを確認しました！
+
+
+# 参考
+
+めっちゃ参考にさせてもらいました！
+ありがとうございます....!
+
+- [serverless-next.js](https://github.com/serverless-nextjs/serverless-next.js#readme)
+- [serverless-nextjs - awspermissions](https://serverless-nextjs.com/docs/awspermissions/)
+- [Serverless Nextjs Pluginを試してみた](https://dev.classmethod.jp/articles/tried-serverless-nextjst-plugin/)
+- [Vercelを使わずにAWSだけでNext.jsのISR対応!【serverless-next.js】](https://zenn.dev/makumattun/articles/6e260f3a5af117)
+- [AWS CLI の設定](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-quickstart.html)
+- [serverless-next.jsのISR対応時のPR](https://github.com/serverless-nextjs/serverless-next.js/pull/1028)

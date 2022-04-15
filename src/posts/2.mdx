@@ -1,0 +1,261 @@
+---
+title: "ReactNativeの開発環境メモ１ - ESLint編"
+published: true
+date: "2021-05-07"
+tags: ["reactnative", "typescript", "eslint"]
+---
+
+# ReactNativeの開発環境を作る - ESLint編
+
+想定としては下記あればいいかなと思っています。
+
+- Expo
+- TypeScript
+- ESLint
+- Prettier
+- StoryBook
+- husky
+- lint-staged
+
+
+## Expo & TypeScript
+TypeScript対応は`expo-cli`でinitする時にTypeScriptを指定すればおkなのでskip
+
+## ESLint
+
+```
+$ npx eslint --init
+```
+eslintの設定を開始
+
+```
+? How would you like to use ESLint? … 
+  To check syntax only
+  To check syntax and find problems
+❯ To check syntax, find problems, and enforce code style
+```
+syntaxとコード修正してくれるやつが便利なので一番下を選択
+
+```
+? What type of modules does your project use? … 
+❯ JavaScript modules (import/export)
+  CommonJS (require/exports)
+  None of these
+```
+import/exportをつかうので一番上を選択
+
+
+```
+? Which framework does your project use? … 
+❯ React
+  Vue.js
+  None of these
+```
+ReactNativeなので一番上を選択
+
+```
+? Does your project use TypeScript? › No / Yes
+```
+TypeScript使うのでYes
+
+
+```
+? Where does your code run? …  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+  Browser
+✔ Node
+```
+ブラウザでは実行しないのでNodeを選択
+
+```
+? How would you like to define a style for your project? … 
+  Use a popular style guide
+❯ Answer questions about your style
+  Inspect your JavaScript file(s)
+```
+ここは自分好みに調整できる`Answer questions about your style`を選択。
+
+```
+? What format do you want your config file to be in? … 
+❯ JavaScript
+  YAML
+  JSON
+```
+いままでは`.eslintrc`を使っていたのですが、拡張なしの設定ファイルは非推奨になっていたのでちょい悩み。
+軽くみてたら`JavaScript`が多数だったのでいったん`JavaScript`で進める
+
+```
+? What style of indentation do you use? … 
+  Tabs
+❯ Spaces
+```
+typescriptの規約でスペースとなっているので`Spaces`
+TSスタイルガイド：https://typescript-jp.gitbook.io/deep-dive/styleguide#supsu
+
+```
+? What quotes do you use for strings? … 
+  Double
+❯ Single
+```
+こちらも規約で`Single`なので`Single`
+TSスタイルガイド：https://typescript-jp.gitbook.io/deep-dive/styleguide#yin-yong-fu
+
+```
+? What line endings do you use? … 
+❯ Unix
+  Windows
+```
+Macを使用しているので`Unix`を選択。
+
+```
+? Do you require semicolons? › No / Yes
+```
+規約でセミコロン使えとあるので、まよわずYes
+TSスタイルガイド：https://typescript-jp.gitbook.io/deep-dive/styleguide#semikoron
+
+```
+✔ How would you like to use ESLint? · style
+✔ What type of modules does your project use? · esm
+✔ Which framework does your project use? · react
+✔ Does your project use TypeScript? ·    / Yes
+✔ Where does your code run? · node
+✔ How would you like to define a style for your project? · prompt
+✔ What format do you want your config file to be in? · JavaScript
+✔ What style of indentation do you use? · 4
+✔ What quotes do you use for strings? · single
+✔ What line endings do you use? · unix
+✔ Do you require semicolons? ·    / Yes
+```
+最終的にはこんな感じ。
+
+
+```
+Warning: React version not specified in eslint-plugin-react settings. See https://github.com/yannickcr/eslint-plugin-react#configuration .
+```
+consoleに上記のワーニングが出ているので次のステップで直します。
+
+
+### .eslintrc.jsを修正
+
+- インデントが勝手に4に指定されているので2に直す
+
+```javascript
+module.exports = {
+    'env': {
+        'es2020': true,
+        'node': true
+    },
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:@typescript-eslint/recommended'
+    ],
+    'parser': '@typescript-eslint/parser',
+    'parserOptions': {
+        'ecmaFeatures': {
+            'jsx': true
+        },
+        'ecmaVersion': 11,
+        'sourceType': 'module'
+    },
+    'plugins': [
+        'react',
+        '@typescript-eslint'
+    ],
+    'rules': {
+        'indent': [
+            'error',
+-            4
++            2
+        ],
+        'linebreak-style': [
+            'error',
+            'unix'
+        ],
+        'quotes': [
+            'error',
+            'single'
+        ],
+        'semi': [
+            'error',
+            'always'
+        ]
+    }
+};
+
+```
+
+## hooksのeslint設定
+こいつをいれてみる！
+https://ja.reactjs.org/docs/hooks-rules.html#eslint-plugin
+
+### eslint-plugin-react-hooksを追加
+
+Expoが標準でyarnを使っているのでyarnで。
+
+```
+$ yarn add -D eslint-plugin-react-hooks
+```
+
+### .eslintrc.jsをまた修正
+
+```javascript
+module.exports = {
+  'env': {
+    'es2020': true,
+    'node': true
+  },
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
+  'parser': '@typescript-eslint/parser',
+  'parserOptions': {
+    'ecmaFeatures': {
+      'jsx': true
+    },
+    'ecmaVersion': 11,
+    'sourceType': 'module'
+  },
+  'plugins': [
+    'react',
+    '@typescript-eslint',
++    'react-hooks'
+  ],
+  'rules': {
+    'indent': [
+      'error',
+      2
+    ],
+    'linebreak-style': [
+      'error',
+      'unix'
+    ],
+    'quotes': [
+      'error',
+      'single'
+    ],
+    'semi': [
+      'error',
+      'always'
+    ],
++    'react-hooks/rules-of-hooks': 'error',
++    'react-hooks/exhaustive-deps': 'warn'
+  }
+};
+
+```
+
+# おわり
+これでeslntの設定はいったん終了。
+次にPretterの設定をします
+
+
+# 目次
+長いので、分ける
+
+- ESLint （この記事）
+- [Prettier](/posts/4)
+- StoryBook
+- husky
+- lint-staged

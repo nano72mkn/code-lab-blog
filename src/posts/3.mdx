@@ -1,0 +1,53 @@
+---
+title: "ReactNativeの開発環境メモ２ - Prettier編"
+published: true
+date: "2021-05-07"
+tags: ["reactnative", "typescript", "prettier"]
+---
+
+今回はPrettier編。
+整形を担当してくれるプラグインです。
+
+コード規約を強制してあげることができます。
+`'`と`"`のどっちを使うかなど、自分が揃えていても開発は複数人で行うもの
+たくさんの人でコードを書くと各自の美学でコードは鮮やかになってしまうのでルールを決めてしまいましょう。
+
+# 設定をしていく
+
+1. Prettier関連を追加する
+
+必要なプラグインを追加します。
+```
+yarn add -D prettier eslint-plugin-prettier
+```
+
+ Prettierの設定ファイルを追加
+`.prettierrc`
+```
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "parser": "typescript",
+  "filepath": "./src/**/*.{ts,tsx}"
+}
+
+```
+
+
+## ESLintの設定
+eslintのpluginも設定します。
+```
+...
+  'plugins': [
+    'react',
+    '@typescript-eslint',
+    'react-hooks',
++    'prettier'
+  ],
+...
+```
+
+# おわり
+Prettierはこれだけでおk
+おわりです！

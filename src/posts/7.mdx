@@ -1,0 +1,21 @@
+---
+title: "Typescript error: Cannot find name 'Response' というエラーが出た"
+published: true
+date: "2021-05-11"
+tags: ["typescript"]
+---
+
+## TL;DR
+`tsconfig.json`のlibに`dom`を追加
+
+
+## 現象
+リポジトリの分割作業で出たエラー。
+
+```
+Typescript error: Cannot find name 'Response' 
+```
+
+解決策は、`tsconfig.json`のlibに`dom`を追加するだけ
+
+参考：https://github.com/ynab/ynab-sdk-js/issues/96

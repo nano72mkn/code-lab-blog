@@ -1,0 +1,50 @@
+---
+title: "ReactNativeの開発環境メモ４ - storybook編"
+published: true
+date: "2021-05-08"
+tags: ["reactnative", "storybook"]
+---
+
+## Storybookについて
+
+一言で言うとStorybookはUIを確認するためのツールです。
+
+このような時に便利です
+
+- 機能実装前にUIだけでも進めておきたい！
+- デザイナーにUIの確認をしてもらう
+- 実際の動きを作りながら確認する
+- 修正の影響を確認する
+
+機能実装の前に...という場面は結構あると思います。
+そんな時に Storybook があると便利です。
+
+
+## 前提
+今回は、Expo（RN）を想定しています。
+
+## Storybookを導入する
+StorybookにはRN用のものが用意されていますが、現時点（2021/5/8）ではRN用を入れると一つ前のv5がインストールされてしまうので、今回は使いません。
+
+RN用のStorybook：https://github.com/storybookjs/react-native
+
+
+### インストール
+```
+$ npx -p @storybook/cli sb init --type react
+```
+typeを`react_native`にすると、RNのものになります。
+
+
+
+処理が終わったら、下記で実行。そのまま動くと思います。
+```
+$ yarn storybook
+```
+
+ちなみに、ViewやButtonなどのreact-nativeの部品もwebで確認できるので特に問題ないように思います。
+
+## おわり
+Storybookはこれで一応導入できました。
+RN用の物を発見してワクワクしていたのですが、メインバージョンが一つ下がってしまうのは流石に使いにくいので妥協しました。
+今後、開発に影響出たら訂正等していきます
