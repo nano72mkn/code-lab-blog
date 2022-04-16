@@ -1,5 +1,5 @@
 type Post = {
-  slag: string;
+  slug: string;
   frontMatter: PostFrontMatter;
 };
 
@@ -8,4 +8,5 @@ type PostFrontMatter = {
   published: boolean;
   tags: string[];
   date: string;
+  emoji: string;
 };
