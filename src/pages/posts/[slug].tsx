@@ -7,6 +7,7 @@ import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 
+import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
 
 import type {
@@ -14,6 +15,7 @@ import type {
   InferGetStaticPropsType,
   NextPage,
 } from 'next';
+import type { MDXRemoteProps } from 'next-mdx-remote';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -55,6 +57,52 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   };
 };
 
+const components: MDXRemoteProps['components'] = {
+  h1: (props) => (
+    <h1
+      {...props}
+      id={props.children?.toString()}
+      className="text-2xl font-bold"
+    />
+  ),
+  h2: (props) => (
+    <h2
+      {...props}
+      id={props.children?.toString()}
+      className="text-2xl font-bold"
+    />
+  ),
+  h3: (props) => (
+    <h3
+      {...props}
+      id={props.children?.toString()}
+      className="text-2xl font-bold"
+    />
+  ),
+  h4: (props) => (
+    <h4
+      {...props}
+      id={props.children?.toString()}
+      className="text-2xl font-bold"
+    />
+  ),
+  h5: (props) => (
+    <h4
+      {...props}
+      id={props.children?.toString()}
+      className="text-2xl font-bold"
+    />
+  ),
+  h6: (props) => (
+    <h4
+      {...props}
+      id={props.children?.toString()}
+      className="text-2xl font-bold"
+    />
+  ),
+  pre: (props: any) => <CodeBlock {...props.children.props} />,
+};
+
 const PostPage: NextPage<Props> = ({
   frontMatter: { title },
   slug,
@@ -65,7 +113,7 @@ const PostPage: NextPage<Props> = ({
       <Head title={title} slug={slug} />
       <h1>{title}</h1>
       <main>
-        <MDXRemote {...mdxSource} />
+        <MDXRemote {...mdxSource} components={components} />
       </main>
     </div>
   );

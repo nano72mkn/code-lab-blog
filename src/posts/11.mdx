@@ -114,7 +114,7 @@ $ export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 `serverless.yaml`を作成し...
 
-```js:serverless.yaml
+```javascript:serverless.yaml
 myApp:
   component: '@sls-next/serverless-component@1.20.0-alpha.4'
 ```
@@ -155,7 +155,7 @@ Warningでてますが、ISR対応がまだベータ版なのでしかたなし�
 
 まずは、`test/isr.tsx`を作成
 
-```js:test/isr.tsx
+```typescript:test/isr.tsx
 import React from 'react'
 import { GetStaticProps } from 'next'
 
