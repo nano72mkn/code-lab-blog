@@ -135,12 +135,15 @@ const PostPage: NextPage<Props> = ({
   mdxSource,
 }) => {
   return (
-    <div className="mt-4">
-      <Head title={title} slug={slug} />
-      <h1>{title}</h1>
-      <main>
-        <MDXRemote {...mdxSource} components={components} />
+    <div>
+      <main className="mt-4">
+        <Head title={title} slug={slug} />
+        <h1>{title}</h1>
+        <article>
+          <MDXRemote {...mdxSource} components={components} />
+        </article>
       </main>
+      <aside></aside>
     </div>
   );
 };
