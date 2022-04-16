@@ -7,6 +7,8 @@ import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 
+import { Head } from 'components/Head';
+
 import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
@@ -47,18 +49,23 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   return {
     props: {
       frontMatter,
+      slug,
       mdxSource,
     },
   };
 };
 
-const PostPage: NextPage<Props> = ({ frontMatter: { title }, mdxSource }) => {
+const PostPage: NextPage<Props> = ({
+  frontMatter: { title },
+  slug,
+  mdxSource,
+}) => {
   return (
     <div className="mt-4">
+      <Head title={title} slug={slug} />
       <h1>{title}</h1>
       <main>
         <MDXRemote {...mdxSource} />
-        <></>
       </main>
     </div>
   );

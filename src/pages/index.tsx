@@ -3,6 +3,8 @@ import path from 'path';
 
 import matter from 'gray-matter';
 
+import { Head } from 'components/Head';
+
 import type { InferGetStaticPropsType, NextPage } from 'next';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -32,6 +34,7 @@ export const getStaticProps = async () => {
 const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
+      <Head />
       {posts.map((post, index) => (
         <p key={index}>{post.frontMatter.title}</p>
       ))}
