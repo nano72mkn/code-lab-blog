@@ -8,12 +8,10 @@ interface Props {
 }
 
 export const Link: React.FC<Props> = ({ href, children }) => {
-  console.log(href, children);
   let Component = <span>{children}</span>;
 
   if (!href) return <></>;
 
-  console.log(children === href);
   if (children === href) {
     Component = <OgpCard url={href} />;
   }

@@ -6,9 +6,11 @@ interface Props {
 
 export const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className="container mx-auto px-5">
-      <Header />
-      {children}
+    <div className="bg-gray-50">
+      <div className="container mx-auto px-5">
+        <Header />
+        {children}
+      </div>
     </div>
   );
 };

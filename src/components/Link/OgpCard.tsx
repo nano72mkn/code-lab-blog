@@ -14,8 +14,6 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
     fetch(url).then((r) => r.json()),
   );
 
-  console.log(data);
-
   if (!data) return <div className="animate-pulse">{url}</div>;
   return (
     <div className="my-10 border rounded-xl overflow-hidden">

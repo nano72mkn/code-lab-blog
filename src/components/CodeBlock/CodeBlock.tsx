@@ -10,8 +10,6 @@ export const CodeBlock = (props: any) => {
   const lang = match ? match[1] : '';
   const name = match ? match[2] : '';
 
-  console.log(name, lang);
-
   return (
     <div className="my-5 shadow-md">
       {name && (

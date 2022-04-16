@@ -3,22 +3,26 @@ import path from 'path';
 
 import React from 'react';
 
+import { format } from 'date-fns';
 import matter from 'gray-matter';
-import { MDXRemote } from 'next-mdx-remote';
+import toc from 'markdown-toc';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import NextLink from 'next/Link';
 
 import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
 import { Link } from 'components/Link';
 
-import type {
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-  NextPage,
-} from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import type { MDXRemoteProps } from 'next-mdx-remote';
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
+type Props = {
+  frontMatter: PostFrontMatter;
+  slug: string;
+  mdxSource: MDXRemoteSerializeResult<Record<string, unknown>>;
+  tocData: ReturnType<typeof toc>['json'];
+};
 
 export const getStaticPaths = async () => {
   const postsPath = path.join(process.cwd(), 'src/posts');
@@ -36,8 +40,8 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-  const slug = params?.slug;
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+  const slug = params?.slug as string;
   if (!slug) {
     return {
       notFound: true,
@@ -49,11 +53,14 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const { data: frontMatter, content } = matter(markdownWithMeta);
   const mdxSource = await serialize(content);
 
+  const tocData = toc(content).json;
+
   return {
     props: {
-      frontMatter,
+      frontMatter: frontMatter as PostFrontMatter,
       slug,
       mdxSource,
+      tocData,
     },
   };
 };
@@ -130,20 +137,53 @@ const components: MDXRemoteProps['components'] = {
 };
 
 const PostPage: NextPage<Props> = ({
-  frontMatter: { title },
+  frontMatter: { title, emoji, date, tags },
   slug,
   mdxSource,
+  tocData,
 }) => {
   return (
     <div>
-      <main className="mt-4">
-        <Head title={title} slug={slug} />
-        <h1>{title}</h1>
-        <article>
-          <MDXRemote {...mdxSource} components={components} />
-        </article>
-      </main>
-      <aside></aside>
+      <Head title={title} slug={slug} />
+      <div className="flex items-center flex-col w-full my-10 p-10">
+        <div className="text-6xl mb-5">{emoji}</div>
+        <h1 className="text-3xl font-bold mb-10">{title}</h1>
+        <div className="flex space-x-2">
+          {tags &&
+            tags.map((tag, index) => (
+              <p key={index} className="text-gray-500">
+                {tag}
+              </p>
+            ))}
+        </div>
+        <p className="text-gray-500">{format(new Date(date), 'yyyy/MM/dd')}</p>
+      </div>
+      <div className="md:flex md:space-x-10">
+        <main className="xl:w-3/4 md:w-3/5 p-10 shadow-md rounded-md bg-white">
+          <article>
+            <MDXRemote {...mdxSource} components={components} />
+          </article>
+        </main>
+        <aside className="xl:w-1/4 md:w-2/5">
+          <div className="md:sticky md:top-10 p-10 shadow-md rounded-md bg-white">
+            <div className=" text-lg font-bold mb-5">もくじ</div>
+            <div className="space-y-3">
+              {tocData.map((toc, index) => (
+                <div
+                  key={index}
+                  className={`${
+                    toc.lvl === 2 ? 'pl-2' : toc.lvl === 3 ? 'pl-4' : ''
+                  }`}
+                >
+                  <NextLink href={`#${toc.slug}`} scroll={false}>
+                    <a>{toc.slug}</a>
+                  </NextLink>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 };

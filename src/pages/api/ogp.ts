@@ -25,8 +25,6 @@ const ogp = async (
     res.status(500).end();
   }
 
-  console.log(req.query.url);
-
   const url = new URL(req.query.url as string);
   const ogp = await ogpParser(url.href, { skipOembed: true });
 
