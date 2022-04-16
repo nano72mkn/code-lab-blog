@@ -8,7 +8,7 @@ import matter from 'gray-matter';
 import toc from 'markdown-toc';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import NextLink from 'next/Link';
+import NextLink from 'next/link';
 
 import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
