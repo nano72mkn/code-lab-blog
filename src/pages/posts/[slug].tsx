@@ -3,19 +3,14 @@ import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { GetStaticProps, NextPage } from 'next';
-import { Header } from 'components/Header';
+import { MDXRemote } from 'next-mdx-remote';
+import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next';
 
-interface Props {
-  frontMatter: any;
-  slug: string;
-  mdxSource: MDXRemoteSerializeResult;
-}
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticPaths = async () => {
-  const postPath = path.join(process.cwd(), 'src/posts');
-  const files = fs.readdirSync(postPath);
+  const postsPath = path.join(process.cwd(), 'src/posts');
+  const files = fs.readdirSync(postsPath);
 
   const paths = files.map((filename) => ({
     params: {
@@ -29,9 +24,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
-  params,
-}) => {
+export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const slug = params?.slug;
   if (!slug) {
     return {
@@ -41,32 +34,24 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
   const postPath = path.join(process.cwd(), 'src/posts', slug + '.mdx');
   const markdownWithMeta = fs.readFileSync(postPath, 'utf-8');
 
-  console.log('markdownWithMeta', markdownWithMeta);
-
   const { data: frontMatter, content } = matter(markdownWithMeta);
-  console.log(frontMatter);
-  const mdxSource = await serialize(content, { parseFrontmatter: true });
-  console.log(mdxSource);
+  const mdxSource = await serialize(content);
 
   return {
     props: {
       frontMatter,
-      slug,
       mdxSource,
     },
   };
 };
 
-const PostPage: NextPage<Props> = ({
-  slug,
-  frontMatter: { title },
-  mdxSource,
-}) => {
-  console.log(slug, mdxSource);
+const PostPage: NextPage<Props> = ({ frontMatter: { title }, mdxSource }) => {
   return (
     <div className="mt-4">
       <h1>{title}</h1>
-      <MDXRemote {...mdxSource} />
+      <main>
+        <MDXRemote {...mdxSource} />
+      </main>
     </div>
   );
 };

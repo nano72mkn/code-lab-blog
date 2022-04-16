@@ -1,19 +1,21 @@
-import type { NextPage } from 'next';
+import type { InferGetStaticPropsType, NextPage } from 'next';
 import path from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
 
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
 export const getStaticProps = async () => {
-  const postPath = path.join(process.cwd(), 'src/posts');
-  const files = fs.readdirSync(postPath);
+  const postsPath = path.join(process.cwd(), 'src/posts');
+  const files = fs.readdirSync(postsPath);
   const posts = files.map((filename) => {
     const markdownWithMeta = fs.readFileSync(
-      path.join(postPath, filename),
+      path.join(postsPath, filename),
       'utf-8',
     );
-    const { data: frontMatter } = matter(markdownWithMeta);
+    const { data } = matter(markdownWithMeta);
     return {
-      frontMatter,
+      frontMatter: data as PostFrontMatter,
       slug: filename.replace('.mdx', ''),
     };
   });
@@ -25,16 +27,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const Home: NextPage<{
-  posts: {
-    slag: string;
-    frontMatter: {
-      title: string;
-      published: boolean;
-      tags: string[];
-    };
-  }[];
-}> = ({ posts }) => {
+const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
       {posts.map((post, index) => (
