@@ -1,5 +1,7 @@
 import NextHeadSeo from 'next-head-seo';
 
+import { getOgpCardUrl } from 'utils/getOgpCardUrl';
+
 interface HeadProps {
   title?: string;
   slug?: string;
@@ -21,8 +23,8 @@ export const Head: React.FC<HeadProps> = ({ title: titleProps, slug }) => {
         type: slug ? 'article' : 'website',
         siteName: 'code-lab',
         image: slug
-          ? `https://blog.code-lab.xyz/api/ogp_card?title=${titleProps}`
-          : `https://blog.code-lab.xyz/api/ogp_card?title=Code%20Lab%20Blog`,
+          ? getOgpCardUrl(titleProps)
+          : getOgpCardUrl('Code%20Lab%20Blog'),
       }}
       twitter={{
         card: 'summary_large_image',

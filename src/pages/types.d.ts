@@ -7,4 +7,5 @@ type PostFrontMatter = {
   title: string;
   published: boolean;
   tags: string[];
+  date: string;
 };

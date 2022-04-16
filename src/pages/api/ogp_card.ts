@@ -66,42 +66,47 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
     ctx.fill();
 
     // タイトル
-    const fontSize = 50;
+    const fontSize = 80;
     const title = req.query.title;
+    const maxLine = 3;
     ctx.font = `${fontSize}px NotoSansJP`;
-    ctx.fillStyle = '#000000';
-    ctx.textAlign = 'center';
+    ctx.fillStyle = '#333333';
+    ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
 
     if (title) {
       const lines: string[] = [];
 
-      Array.from(title).forEach((v) => {
+      for (const v of Array.from(title)) {
         if (
           lines.length &&
-          ctx.measureText(lines[lines.length - 1]).width < innerWidth - 100
+          ctx.measureText(lines[lines.length - 1]).width < innerWidth - 150
         ) {
           lines[lines.length - 1] += v;
-        } else {
-          lines.push(v);
+          continue;
         }
-      });
+
+        if (maxLine === lines.length) {
+          lines[lines.length - 1] = lines[lines.length - 1].replace(/.$/, '…');
+          break;
+        }
+
+        lines.push(v);
+      }
 
       lines.forEach((line, i) => {
-        ctx.fillText(
-          line,
-          width / 2,
-          height / 2 -
-            (lines.length - 1) * fontSize +
-            fontSize * (i + 1) -
-            fontSize,
-        );
+        ctx.fillText(line, innerX + 50, innerY * 2 + 50 + (fontSize + 10) * i);
       });
     }
 
     // 署名
     ctx.font = `30px NotoSansJP`;
-    ctx.fillText('@shota1995m', width - 11 * 14, height - 35 - innerX);
+    const name = '@shota1995m';
+    ctx.fillText(
+      name,
+      innerWidth - ctx.measureText(name).width,
+      height - 35 - innerX,
+    );
     // 変換
     const buffer = canvas.toBuffer('image/png');
     res.writeHead(200, {

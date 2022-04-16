@@ -19,6 +19,9 @@ const nextConfig = {
     };
     return config;
   },
+  images: {
+    domains: ['www.google.com', 'blog.code-lab.xyz', 'localhost'],
+  },
 };
 
 module.exports = withMDX(nextConfig);
