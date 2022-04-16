@@ -1,12 +1,18 @@
-import React from 'react';
-import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next';
-
 import fs from 'fs';
 import path from 'path';
+
+import React from 'react';
 
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import { useRouter } from 'next/router';
+
+import type {
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+  NextPage,
+} from 'next';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -48,11 +54,13 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
 };
 
 const PostPage: NextPage<Props> = ({ frontMatter: { title }, mdxSource }) => {
+  const router = useRouter();
   return (
     <div className="mt-4">
       <h1>{title}</h1>
       <main>
         <MDXRemote {...mdxSource} />
+        <></>
       </main>
     </div>
   );

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import matter from 'gray-matter';
+
 import type { InferGetStaticPropsType, NextPage } from 'next';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;

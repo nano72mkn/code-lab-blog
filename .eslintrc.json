@@ -1,19 +1,37 @@
 {
   "extends": ["next/core-web-vitals", "prettier"],
-  "plugins": ["simple-import-sort"],
+  "plugins": ["import", "unused-imports"],
   "rules": {
-    "simple-import-sort/imports": [
-      "error",
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "import/order": ["error",
       {
         "groups": [
-          ["react$", "next$"],
-          ["fs$", "path$"],
-          ["^@?\\w"],
-          ["^(components)(/.*)"],
-          ["^\\.\\.(?!/?$)", "^\\.\\./?$", "^\\u0000"]
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin", "react", "next"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "{components/**, styles/**}",
+            "group": "internal",
+            "position": "before"
+          }
         ]
       }
-    ],
-    "simple-import-sort/exports": "error"
+    ]
   }
 }
