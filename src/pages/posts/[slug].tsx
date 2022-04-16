@@ -1,10 +1,12 @@
 import React from 'react';
-import path from 'path';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote } from 'next-mdx-remote';
 import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next';
+
+import fs from 'fs';
+import path from 'path';
+
+import matter from 'gray-matter';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
