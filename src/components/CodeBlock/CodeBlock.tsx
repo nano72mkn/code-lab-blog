@@ -13,7 +13,7 @@ export const CodeBlock = (props: any) => {
   console.log(name, lang);
 
   return (
-    <div className="my-5">
+    <div className="my-5 shadow-md">
       {name && (
         <div className="rounded-t-md bg-gray-200 px-3 py-2 text-gray-600">
           {name}
@@ -23,7 +23,7 @@ export const CodeBlock = (props: any) => {
         style={hybrid}
         language={lang}
         wrapLongLines
-        class={`text-sm p-5 rounded-md ${name ? 'rounded-t-none' : ''}`}
+        className={`text-sm p-5 rounded-md ${name ? 'rounded-t-none' : ''}`}
       >
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
