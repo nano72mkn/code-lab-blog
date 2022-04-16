@@ -147,7 +147,7 @@ const PostPage: NextPage<Props> = ({
       <Head title={title} slug={slug} />
       <div className="flex items-center flex-col w-full my-10 p-10">
         <div className="text-6xl mb-5">{emoji}</div>
-        <h1 className="text-3xl font-bold mb-10">{title}</h1>
+        <h1 className="text-3xl font-bold mb-10 text-center">{title}</h1>
         <div className="flex space-x-2">
           {tags &&
             tags.map((tag, index) => (
