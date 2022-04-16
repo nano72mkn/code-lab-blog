@@ -22,9 +22,10 @@ export const Head: React.FC<HeadProps> = ({ title: titleProps, slug }) => {
         url,
         type: slug ? 'article' : 'website',
         siteName: 'code-lab',
-        image: slug
-          ? getOgpCardUrl(titleProps)
-          : getOgpCardUrl('Code%20Lab%20Blog'),
+        image:
+          slug && titleProps
+            ? getOgpCardUrl(titleProps)
+            : getOgpCardUrl('Code%20Lab%20Blog'),
       }}
       twitter={{
         card: 'summary_large_image',

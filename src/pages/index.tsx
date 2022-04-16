@@ -2,11 +2,9 @@ import fs from 'fs';
 import path from 'path';
 
 import matter from 'gray-matter';
-import Image from 'next/image';
 
 import { Head } from 'components/Head';
-
-import { getOgpCardUrl } from 'utils/getOgpCardUrl';
+import { PostCard } from 'components/PostCard';
 
 import type { InferGetStaticPropsType, NextPage } from 'next';
 
@@ -42,16 +40,11 @@ const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
       <Head />
-      {posts.map((post, index) => (
-        <p key={index}>
-          <Image
-            src={getOgpCardUrl(post.frontMatter.title)}
-            width={300}
-            height={157}
-          />
-          {post.frontMatter.title}
-        </p>
-      ))}
+      <div className="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-10">
+        {posts.map((post, index) => (
+          <PostCard key={index} {...post} />
+        ))}
+      </div>
     </div>
   );
 };
