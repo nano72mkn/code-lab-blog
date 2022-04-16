@@ -1,3 +1,5 @@
+import { appHost } from 'config/app';
+
 export const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between py-5 md:py-10">
@@ -15,7 +17,7 @@ export const Header: React.FC = () => {
           <li>
             <a
               className="transition underline font-bold hover:text-gray-400"
-              href="https://blog.code-lab.xyz"
+              href={appHost}
             >
               Blog
             </a>

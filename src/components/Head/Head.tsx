@@ -1,5 +1,6 @@
 import NextHeadSeo from 'next-head-seo';
 
+import { appHost } from 'config/app';
 import { getOgpCardUrl } from 'utils/getOgpCardUrl';
 
 interface HeadProps {
@@ -9,7 +10,7 @@ interface HeadProps {
 
 export const Head: React.FC<HeadProps> = ({ title: titleProps, slug }) => {
   const title = `Code Lab Blog${titleProps ? ` | ${titleProps}` : ''}`;
-  const url = `https://blog.code-lab.xyz${slug ? `/${slug}` : ''}`;
+  const url = `${appHost}${slug ? `/${slug}` : ''}`;
   const description = 'Code Lab Blog | 実験サイト兼個人ブログ';
   return (
     <NextHeadSeo

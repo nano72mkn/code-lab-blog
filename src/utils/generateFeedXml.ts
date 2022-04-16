@@ -4,6 +4,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import RSS from 'rss';
 
+import { appHost } from 'config/app';
+
 export const generateFeedXml = async () => {
   const feed = new RSS({
     title: 'タイトル',
@@ -32,7 +34,7 @@ export const generateFeedXml = async () => {
       title: post.frontMatter.title,
       description: '',
       date: new Date(post.frontMatter.date),
-      url: `https://blog.code-lab.xyz/posts/${post.slug}`,
+      url: `${appHost}/posts/${post.slug}`,
     });
   });
 
