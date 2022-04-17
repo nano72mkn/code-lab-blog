@@ -9,6 +9,7 @@ import toc from 'markdown-toc';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import NextLink from 'next/link';
+import rehypeSlug from 'rehype-slug';
 
 import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
@@ -51,7 +52,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const markdownWithMeta = fs.readFileSync(postPath, 'utf-8');
 
   const { data: frontMatter, content } = matter(markdownWithMeta);
-  const mdxSource = await serialize(content);
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      rehypePlugins: [rehypeSlug],
+    },
+  });
 
   const tocData = toc(content).json;
 
@@ -67,26 +72,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
 const components: MDXRemoteProps['components'] = {
   h1: (props) => (
-    <h1
-      {...props}
-      id={props.children?.toString()}
-      className="text-3xl font-bold mt-14 mb-10 pb-3 border-b-2"
-    />
+    <h1 {...props} className="text-3xl font-bold mt-14 mb-10 pb-3 border-b-2" />
   ),
-  h2: (props) => (
-    <h2
-      {...props}
-      id={props.children?.toString()}
-      className="text-2xl font-bold mt-10 mb-5"
-    />
-  ),
-  h3: (props) => (
-    <h3
-      {...props}
-      id={props.children?.toString()}
-      className="text-xl font-bold  mt-7 mb-3"
-    />
-  ),
+  h2: (props) => <h2 {...props} className="text-2xl font-bold mt-10 mb-5" />,
+  h3: (props) => <h3 {...props} className="text-xl font-bold  mt-7 mb-3" />,
   h4: (props) => (
     <h4
       {...props}
@@ -94,20 +83,8 @@ const components: MDXRemoteProps['components'] = {
       className="text-xl font-bold  mt-7 mb-3"
     />
   ),
-  h5: (props) => (
-    <h5
-      {...props}
-      id={props.children?.toString()}
-      className="font-bold mt-7 mb-3"
-    />
-  ),
-  h6: (props) => (
-    <h6
-      {...props}
-      id={props.children?.toString()}
-      className="font-bold mt-7 mb-3"
-    />
-  ),
+  h5: (props) => <h5 {...props} className="font-bold mt-7 mb-3" />,
+  h6: (props) => <h6 {...props} className="font-bold mt-7 mb-3" />,
   p: (props) =>
     props.children &&
     typeof props.children === 'string' &&
@@ -159,28 +136,28 @@ const PostPage: NextPage<Props> = ({
         <p className="text-gray-500">{format(new Date(date), 'yyyy/MM/dd')}</p>
       </div>
       <div className="md:flex md:space-x-10">
-        <main className="xl:w-3/4 md:w-3/5 p-10 shadow-md rounded-md bg-white">
+        <main className="xl:w-3/4 md:w-3/5 mb-10 md:mb-0 p-10  shadow-md rounded-md bg-white">
           <article>
-            <MDXRemote {...mdxSource} components={components} />
+            <MDXRemote {...mdxSource} components={components} lazy />
           </article>
         </main>
         <aside className="xl:w-1/4 md:w-2/5">
           <div className="md:sticky md:top-10 p-10 shadow-md rounded-md bg-white">
             <div className=" text-lg font-bold mb-5">もくじ</div>
-            <div className="space-y-3">
+            <ul className="space-y-3 pl-5">
               {tocData.map((toc, index) => (
-                <div
+                <li
                   key={index}
                   className={`${
                     toc.lvl === 2 ? 'pl-2' : toc.lvl === 3 ? 'pl-4' : ''
-                  }`}
+                  } ${toc.lvl === 1 ? 'list-disc' : ''}`}
                 >
                   <NextLink href={`#${toc.slug}`} scroll={false}>
                     <a>{toc.slug}</a>
                   </NextLink>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </aside>
       </div>

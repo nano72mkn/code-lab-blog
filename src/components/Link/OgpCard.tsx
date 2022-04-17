@@ -12,13 +12,13 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
 
   if (!data) return <div className="animate-pulse">{url}</div>;
   return (
-    <div className="my-10 border rounded-xl overflow-hidden">
+    <div className="my-10 border rounded-xl overflow-hidden shadow-md hover:shadow-sm transition hover:opacity-80">
       <div className="flex content-center">
-        <div className=" p-5">
+        <div className=" p-5 overflow-hidden">
           <div className="mb-2">
             <p className="font-bold">{data.title}</p>
             {data.seo.description && (
-              <p className="text-sm">{data.seo.description}</p>
+              <p className="text-sm truncate">{data.seo.description}</p>
             )}
           </div>
           <div className="flex items-center">
