@@ -22,11 +22,20 @@ emoji: "📝"
 - GraphQL
 - Prisma
 - PlanetScale
-- Mui
+- Mui 
+
+### フロントエンド
 
 フロントは`Next.js`と`Mui`、  
-APIは`Next.js`の`API Routes`に`Apollo Server`を乗っけて`GraphQL`、  
-パックエンドは`Prisma`と`PlanetScale`。  
+
+### API
+
+APIは`Next.js`の`API Routes`に`Apollo Server`を乗っけて`GraphQL`
+
+### バックエンド
+
+バックエンドは`Prisma`と`PlanetScale`。 
+
 
 という構成でブログを作っていました。  
 
@@ -40,11 +49,18 @@ APIは`Next.js`の`API Routes`に`Apollo Server`を乗っけて`GraphQL`、
 - MDX
 - TailwindCSS
 
+### フロントエンド
+
 `Next.js`から`Remix`への変更も考えましたが、今後仕事で使えるノウハウを貯める為にも、採用されるか分からない`Remix`は今回は見送りました。  
 （といいつつ`Remix`は触ってみたかったので、別のサービス作成時に使ってみたので、後日記事にできればと思います！）  
-UIまわりで今までは`Mui`を採用していましたが、そのまま使用すると`Mui`の色が強すぎる為、デザインの調整に時間がかかること、さらには僕が`CSS`の知識もあることから`TailwindCSS`を採用しました。  
-実は`TailwindCSS`は食わず嫌いをしていて、`Bootstrap`の雰囲気があるため避けていました。  
 
+デザインは今まで`Mui`を採用していましたが、そのまま使用すると`Mui`の色が強すぎる為、デザインの調整に時間がかかること、さらには僕が`CSS`の知識もあることから何を組み合わせたらどうなるかを把握している為、`TailwindCSS`を採用しました。  
+実は`TailwindCSS`は食わず嫌いをしていて、`Bootstrap`の雰囲気があるため避けていました。  
+今回使ってみて、使いやすすぎた為今後は候補に入れていこうと思ってます。（人気なものには理由があるんですね！
+
+### バックエンド
+
+`PlanetScale`から使わないなら停止するぞと通知がくるので、特に変更しなくても再ビルドかけて記事データを読みに行かせたりしてたのでめんどくさくなりました。
 
 ## 各ページについて
 
