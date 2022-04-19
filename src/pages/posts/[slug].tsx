@@ -58,7 +58,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   });
 
   const tocData = toc(content).json;
-  console.log(tocData);
 
   return {
     props: {
