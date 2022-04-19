@@ -13,6 +13,7 @@ import rehypeSlug from 'rehype-slug';
 import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
 import { Link } from 'components/Link';
+import { Sidebar } from 'components/Sidebar';
 
 import type { GetStaticProps, NextPage } from 'next';
 import type { MDXRemoteProps } from 'next-mdx-remote';
@@ -134,29 +135,13 @@ const PostPage: NextPage<Props> = ({
         </div>
         <p className="text-gray-500">{format(new Date(date), 'yyyy/MM/dd')}</p>
       </div>
-      <div className="md:flex md:space-x-10">
+      <div className="md:flex md:space-x-5">
         <main className="xl:w-3/4 md:w-3/5 mb-10 md:mb-0 p-10  shadow-md rounded-md bg-white">
           <article>
             <MDXRemote {...mdxSource} components={components} lazy />
           </article>
         </main>
-        <aside className="xl:w-1/4 md:w-2/5">
-          <div className="md:sticky md:top-10 p-10 shadow-md rounded-md bg-white">
-            <div className=" text-lg font-bold mb-5">もくじ</div>
-            <ul className="space-y-3 pl-5">
-              {tocData.map((toc, index) => (
-                <li
-                  key={index}
-                  className={`${
-                    toc.lvl === 2 ? 'pl-2' : toc.lvl === 3 ? 'pl-4' : ''
-                  } ${toc.lvl === 1 ? 'list-disc' : ''}`}
-                >
-                  <a href={`#${toc.slug}`}>{toc.slug}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
+        <Sidebar tocData={tocData} />
       </div>
     </div>
   );
