@@ -8,7 +8,6 @@ import matter from 'gray-matter';
 import toc from 'markdown-toc';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import NextLink from 'next/link';
 import rehypeSlug from 'rehype-slug';
 
 import { CodeBlock } from 'components/CodeBlock';
@@ -59,6 +58,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   });
 
   const tocData = toc(content).json;
+  console.log(tocData);
 
   return {
     props: {
@@ -152,9 +152,7 @@ const PostPage: NextPage<Props> = ({
                     toc.lvl === 2 ? 'pl-2' : toc.lvl === 3 ? 'pl-4' : ''
                   } ${toc.lvl === 1 ? 'list-disc' : ''}`}
                 >
-                  <NextLink href={`#${toc.slug}`} scroll={false}>
-                    <a>{toc.slug}</a>
-                  </NextLink>
+                  <a href={`#${toc.slug}`}>{toc.slug}</a>
                 </li>
               ))}
             </ul>
