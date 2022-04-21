@@ -50,6 +50,10 @@ export const Head: React.FC<HeadProps> = ({ title: titleProps, slug }) => {
           href: '/favicon-16x16.png',
         },
         {
+          rel: 'shortcut icon',
+          href: '/favicon.ico',
+        },
+        {
           rel: 'manifest',
           href: '/site.webmanifest',
         },
