@@ -7,8 +7,23 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     GlobalFonts.registerFromPath(
-      path.resolve('./public/fonts/NotoSansJP.otf'),
-      'NotoSansJP',
+      path.resolve('./public/fonts/MPLUSRounded1c-Bold.ttf'),
+      'MPLUSRounded1c',
+    );
+
+    GlobalFonts.registerFromPath(
+      path.resolve('./public/fonts/MPLUSRounded1c-Regular.ttf'),
+      'MPLUSRounded1c',
+    );
+
+    console.info(
+      GlobalFonts.families
+        .map((f) =>
+          f.family === 'MPLUSRounded1c' || f.family === 'Murecho'
+            ? f.styles.map((s) => `${f.family} ${s.style}`).join(', ')
+            : null,
+        )
+        .filter(Boolean),
     );
 
     const width = 1200 as const;
@@ -69,7 +84,7 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
     const fontSize = 80;
     const title = req.query.title;
     const maxLine = 3;
-    ctx.font = `${fontSize}px NotoSansJP`;
+    ctx.font = `500 ${fontSize}px MPLUSRounded1c`;
     ctx.fillStyle = '#333333';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
@@ -95,17 +110,21 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       lines.forEach((line, i) => {
-        ctx.fillText(line, innerX + 50, innerY * 2 + 50 + (fontSize + 10) * i);
+        ctx.fillText(
+          line,
+          innerX + 50,
+          innerY * 2 + 50 + (fontSize + 10) * (i * 1.3),
+        );
       });
     }
 
     // 署名
-    ctx.font = `30px NotoSansJP`;
+    ctx.font = `300 50px MPLUSRounded1c`;
     const name = '@shota1995m';
     ctx.fillText(
       name,
       innerWidth - ctx.measureText(name).width,
-      height - 35 - innerX,
+      height - 50 - innerX,
     );
     // 変換
     const buffer = canvas.toBuffer('image/png');
