@@ -111,6 +111,7 @@ const components: MDXRemoteProps['components'] = {
   ul: (props) => <ul className="list-disc pl-10 my-5" {...props} />,
   ol: (props) => <ol className="list-decimal pl-10 my-5" {...props} />,
   li: (props) => <li className="my-3" {...props} />,
+  hr: (props) => <hr className="my-10" {...props} />,
 };
 
 const PostPage: NextPage<Props> = ({
