@@ -9,6 +9,7 @@ import toc from 'markdown-toc';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
@@ -54,6 +55,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const { data: frontMatter, content } = matter(markdownWithMeta);
   const mdxSource = await serialize(content, {
     mdxOptions: {
+      remarkPlugins: [remarkGfm],
       rehypePlugins: [rehypeSlug],
     },
   });
@@ -112,6 +114,18 @@ const components: MDXRemoteProps['components'] = {
   ol: (props) => <ol className="list-decimal pl-10 my-5" {...props} />,
   li: (props) => <li className="my-3" {...props} />,
   hr: (props) => <hr className="my-10" {...props} />,
+  table: (props) => (
+    <div className="my-10 rounded-md overflow-hidden border border-gray-300">
+      <table className="w-full " {...props} />
+    </div>
+  ),
+  th: (props) => (
+    <th className="px-6 py-5 bg-gray-200 text-sm text-left" {...props} />
+  ),
+  td: (props) => <td className="px-6 py-3" {...props} />,
+  tr: (props) => (
+    <tr className="border-b border-gray-300 last:border-0" {...props} />
+  ),
 };
 
 const PostPage: NextPage<Props> = ({
@@ -143,7 +157,7 @@ const PostPage: NextPage<Props> = ({
         </time>
       </div>
       <div className="md:flex md:space-x-5">
-        <main className="xl:w-3/4 md:w-3/5 mb-10 md:mb-0 p-10  shadow-md rounded-md bg-white">
+        <main className="xl:w-3/4 md:w-3/5 mb-10 md:mb-0 md:p-10 p-5  shadow-md rounded-md bg-white">
           <article>
             <MDXRemote {...mdxSource} components={components} lazy />
           </article>
