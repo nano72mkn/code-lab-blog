@@ -133,7 +133,13 @@ const PostPage: NextPage<Props> = ({
               </p>
             ))}
         </div>
-        <p className="text-gray-500">{format(new Date(date), 'yyyy/MM/dd')}</p>
+        <time
+          className="text-gray-500"
+          title={format(new Date(date), 'yyyy/MM/dd')}
+          dateTime={format(new Date(date), 'yyyy-MM-dd')}
+        >
+          {format(new Date(date), 'yyyy/MM/dd')}
+        </time>
       </div>
       <div className="md:flex md:space-x-5">
         <main className="xl:w-3/4 md:w-3/5 mb-10 md:mb-0 p-10  shadow-md rounded-md bg-white">
