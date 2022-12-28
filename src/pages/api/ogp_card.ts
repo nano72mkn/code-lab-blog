@@ -36,8 +36,8 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
     ctx.fillRect(0, 0, width, height);
 
     // inner
-    const innerX = 30;
-    const innerY = 30;
+    const innerX = 50;
+    const innerY = 50;
     const innerWidth = width - innerX * 2;
     const innerHeight = height - innerY * 2;
     const innerRound = 10;
@@ -84,7 +84,7 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
     const fontSize = 80;
     const title = req.query.title;
     const maxLine = 3;
-    ctx.font = `500 ${fontSize}px MPLUSRounded1c`;
+    ctx.font = `700 ${fontSize}px MPLUSRounded1c`;
     ctx.fillStyle = '#333333';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
