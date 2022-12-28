@@ -13,9 +13,9 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
   if (!data) return <div className="animate-pulse">{url}</div>;
   return (
     <div className="my-10 border rounded-xl overflow-hidden shadow-md hover:shadow-sm transition hover:opacity-80">
-      <div className="flex content-center">
-        <div className=" p-5 overflow-hidden">
-          <div className="mb-2">
+      <div className="flex content-center flex-col-reverse xl:flex-row">
+        <div className=" p-5 overflow-hidden flex-1 flex flex-col">
+          <div className="mb-2 flex-1">
             <p className="font-bold">{data.title}</p>
             {data.seo.description && (
               <p className="text-sm truncate">{data.seo.description}</p>
@@ -29,7 +29,10 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
           </div>
         </div>
         {data.ogp.ogImage && (
-          <img src={data.ogp.ogImage} className="object-cover h-fill w-48" />
+          <img
+            src={data.ogp.ogImage}
+            className="object-contain w-full xl:w-4/12"
+          />
         )}
       </div>
     </div>
