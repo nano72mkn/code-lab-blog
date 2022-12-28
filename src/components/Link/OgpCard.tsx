@@ -10,6 +10,8 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
     fetch(url).then((r) => r.json()),
   );
 
+  console.log(data);
+
   if (!data) return <div className="animate-pulse">{url}</div>;
   return (
     <div className="my-10 border rounded-xl overflow-hidden shadow-md hover:shadow-sm transition hover:opacity-80">
@@ -23,16 +25,28 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
           </div>
           <div className="flex items-center">
             <div className="mr-1">
-              <Image src={data.favicon} width={12} height={12} layout="fixed" />
+              <Image
+                src={data.favicon}
+                width={12}
+                height={12}
+                layout="fixed"
+                alt={`${data.domain}のファビコン`}
+              />
             </div>
             <p>{data.domain}</p>
           </div>
         </div>
         {data.ogp.ogImage && (
-          <img
-            src={data.ogp.ogImage}
-            className="object-contain w-full xl:w-4/12"
-          />
+          <div className="relative w-full xl:max-w-sm aspect-ogImage">
+            <Image
+              src={data.ogp.ogImage}
+              className="object-contain"
+              width={793}
+              height={500}
+              layout="fill"
+              alt={data.title}
+            />
+          </div>
         )}
       </div>
     </div>
