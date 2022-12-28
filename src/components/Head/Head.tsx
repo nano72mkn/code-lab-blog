@@ -19,7 +19,6 @@ export const Head: React.FC<HeadProps> = ({ title: titleProps, slug }) => {
     <NextHeadSeo
       title={title}
       description={description}
-      canonical={url}
       og={{
         title,
         description,
