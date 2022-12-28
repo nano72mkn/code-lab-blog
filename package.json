@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.1",
-    "@napi-rs/canvas": "^0.1.21",
+    "@napi-rs/canvas": "^0.1.30",
     "@next/mdx": "^12.1.5",
     "date-fns": "^2.28.0",
     "markdown-toc": "^1.2.0",

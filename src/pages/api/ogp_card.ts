@@ -1,6 +1,8 @@
 import path from 'path';
 
-import { Canvas, GlobalFonts } from '@napi-rs/canvas';
+import { Canvas, GlobalFonts, loadImage } from '@napi-rs/canvas';
+
+import { appHost } from 'config/app';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -109,23 +111,53 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
         lines.push(v);
       }
 
-      lines.forEach((line, i) => {
-        ctx.fillText(
-          line,
-          innerX + 50,
-          innerY * 2 + 50 + (fontSize + 10) * (i * 1.3),
-        );
-      });
+      if (lines.length === 1) {
+        const text = lines[0];
+        const textWidth = ctx.measureText(text).width;
+        ctx.fillText(text, width / 2 - textWidth / 2, innerY * 2 + 180);
+      } else {
+        lines.forEach((line, i) => {
+          ctx.fillText(
+            line,
+            innerX + 50,
+            innerY * 2 + 50 + (fontSize + 10) * (i * 1.3),
+          );
+        });
+      }
     }
 
     // 署名
-    ctx.font = `300 50px MPLUSRounded1c`;
+    ctx.font = `300 30px MPLUSRounded1c`;
     const name = '@shota1995m';
     ctx.fillText(
       name,
       innerWidth - ctx.measureText(name).width,
       height - 50 - innerX,
     );
+
+    // サイト名
+    ctx.font = `700 30px MPLUSRounded1c`;
+    const siteName = 'Code Lab Blog';
+    ctx.fillText(siteName, innerX * 2, height - 50 - innerX);
+
+    // アイコン画像
+    const icon = await loadImage(`${appHost}/icon/ogp_icon.png`);
+    const iconWidth = 460;
+    const iconHeight = 174.34;
+    ctx.drawImage(
+      icon,
+      width / 2 - iconWidth / 2,
+      innerHeight - 70,
+      iconWidth,
+      iconHeight,
+    );
+
+    // ctx.globalCompositeOperation = 'destination-in';
+    // ctx.beginPath();
+    // ctx.arc(icon.width / 2, icon.height / 2, icon.height / 2, 0, Math.PI * 2);
+    // ctx.closePath();
+    // ctx.fill();
+
     // 変換
     const buffer = canvas.toBuffer('image/png');
     res.writeHead(200, {
