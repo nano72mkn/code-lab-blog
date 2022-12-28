@@ -3,8 +3,8 @@ import { format, formatDistanceToNow, subYears } from 'date-fns';
 export const PostCard: React.FC<Post> = ({ slug, frontMatter }) => {
   const { title, date, tags, emoji } = frontMatter;
   return (
-    <article className="block w-full p-5 shadow-xl bg-white transition hover:shadow-md hover:opacity-80 rounded-sm">
-      <a href={`/posts/${slug}`}>
+    <a href={`/posts/${slug}`}>
+      <article className="flex flex-col w-full h-full p-5 shadow-xl bg-white transition hover:shadow-md hover:opacity-80 rounded-md">
         <div className="w-full mb-5 p-5 text-6xl bg-gray-100 text-center">
           {emoji}
         </div>
@@ -16,20 +16,22 @@ export const PostCard: React.FC<Post> = ({ slug, frontMatter }) => {
               </p>
             ))}
         </div>
-        <p className="text-md mb-5">{title}</p>
+        <div className="flex-1">
+          <p className="text-md mb-5">{title}</p>
+        </div>
         <time
           className="text-sm text-gray-900/50"
           title={format(new Date(date), 'yyyy/MM/dd')}
           dateTime={format(new Date(date), 'yyyy-MM-dd')}
         >
           {subYears(new Date(), 1) > new Date(date)
-            ? format(new Date(date), 'yyyy/MM/dd')
+            ? format(new Date(date), 'yyyy / MM / dd')
             : formatDistanceToNow(new Date(date), {
                 includeSeconds: true,
                 addSuffix: true,
               })}
         </time>
-      </a>
-    </article>
+      </article>
+    </a>
   );
 };
