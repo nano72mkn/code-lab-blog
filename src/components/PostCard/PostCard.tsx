@@ -11,7 +11,7 @@ export const PostCard: React.FC<Post> = ({ slug, frontMatter }) => {
         <div className="mb-2 flex space-x-2">
           {tags &&
             tags.map((tag, index) => (
-              <p key={index} className="text-xs text-gray-400">
+              <p key={index} className="text-xs text-gray-400 m-0">
                 {tag}
               </p>
             ))}
