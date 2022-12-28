@@ -5,7 +5,7 @@ export const PostCard: React.FC<Post> = ({ slug, frontMatter }) => {
   return (
     <a href={`/posts/${slug}`}>
       <article className="flex flex-col w-full h-full p-5 shadow-xl bg-white transition hover:shadow-md hover:opacity-80 rounded-md">
-        <div className="w-full mb-5 p-5 text-6xl bg-gray-100 text-center">
+        <div className="w-full mb-5 p-5 text-6xl bg-gray-100 text-center rounded-md">
           {emoji}
         </div>
         <div className="mb-2 flex space-x-2">
