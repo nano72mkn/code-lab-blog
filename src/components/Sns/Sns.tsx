@@ -14,6 +14,7 @@ export const Sns = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="block"
+        aria-label="@shota1995mのTwitter"
       >
         <Twitter className="text-gray-500 hover:text-blue-400" />
       </a>
@@ -22,6 +23,7 @@ export const Sns = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="block"
+        aria-label="@shota1995mのZenn"
       >
         <Zenn className="text-gray-500 hover:text-blue-500" />
       </a>
@@ -30,6 +32,7 @@ export const Sns = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="block"
+        aria-label="@shota1995mのGitHub"
       >
         <Github className="text-gray-500 hover:text-gray-800" />
       </a>
