@@ -19,7 +19,7 @@ export const Link: React.FC<Props> = ({ href, children }) => {
   const externalLink = /^http/.test(href);
   if (externalLink) {
     return (
-      <a href={href} rel="noopener noreferrer">
+      <a href={href} rel="noopener noreferrer" target="_blank">
         {Component}
       </a>
     );
