@@ -3,7 +3,9 @@ import { appHost } from 'config/app';
 export const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between py-5 md:py-10">
-      <p className="font-black text-2xl md:text-4xl">Code Lab 🤔</p>
+      <a href={appHost}>
+        <h1 className="font-black text-2xl md:text-4xl">Code Lab 🤔</h1>
+      </a>
       <nav>
         <ul className="flex space-x-6">
           <li>
