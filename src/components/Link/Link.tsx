@@ -1,6 +1,14 @@
-import NextLink from 'next/link';
+import dynamic from 'next/dynamic';
 
-import { OgpCard } from './OgpCard';
+const NextLink = dynamic(() => {
+  const Component = import('next/link');
+  return Component;
+});
+
+const OgpCard = dynamic(() => {
+  const Component = import('./OgpCard').then((modules) => modules.OgpCard);
+  return Component;
+});
 
 interface Props {
   href?: string;
