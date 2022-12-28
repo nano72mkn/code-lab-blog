@@ -9,6 +9,7 @@ export const Author: React.FC = () => {
         height="50"
         layout="fixed"
         className="rounded-full"
+        alt="@shota1995mのアイコン画像"
       />
       <div className="flex-1 space-y-2">
         <p className="font-bold text-lg">@shota1995m</p>
