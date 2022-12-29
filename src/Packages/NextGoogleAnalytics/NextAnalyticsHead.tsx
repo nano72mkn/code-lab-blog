@@ -7,7 +7,6 @@ interface Props {
 }
 
 export const NextAnalyticsHead: FC<Props> = ({ googleAnalyticsId }) => {
-  console.log(googleAnalyticsId);
   if (!googleAnalyticsId) return null;
   return (
     <>
