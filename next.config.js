@@ -26,6 +26,7 @@ const nextConfig = {
       'localhost',
       'res.cloudinary.com',
       'cdn.blog.st-hatena.com',
+      'planning-poker-remix.code-lab.xyz',
     ],
   },
 };
