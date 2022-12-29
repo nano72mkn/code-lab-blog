@@ -152,12 +152,6 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
       iconHeight,
     );
 
-    // ctx.globalCompositeOperation = 'destination-in';
-    // ctx.beginPath();
-    // ctx.arc(icon.width / 2, icon.height / 2, icon.height / 2, 0, Math.PI * 2);
-    // ctx.closePath();
-    // ctx.fill();
-
     // 変換
     const buffer = canvas.toBuffer('image/png');
     res.writeHead(200, {
