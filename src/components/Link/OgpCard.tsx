@@ -10,7 +10,14 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
     fetch(url).then((r) => r.json()),
   );
 
-  if (!data) return <div className="animate-pulse">{url}</div>;
+  if (!data) {
+    return (
+      <div className="my-10 border rounded-xl shadow-md animate-pulse flex content-center flex-col-reverse xl:flex-row">
+        <p className="break-all p-5 flex-1">{url}</p>
+        <div className="w-full xl:max-w-sm aspect-ogImage bg-slate-100"></div>
+      </div>
+    );
+  }
   return (
     <div className="my-10 border rounded-xl overflow-hidden shadow-md hover:shadow-sm transition hover:opacity-80">
       <div className="flex content-center flex-col-reverse xl:flex-row">
