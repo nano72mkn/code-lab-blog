@@ -13,12 +13,13 @@ interface HeadProps {
 
 export const Head: React.FC<HeadProps> = ({ title: titleProps, slug }) => {
   const title = `${titleProps ? `${titleProps} | ` : ''}Code Lab Blog`;
-  const url = `${appHost}${slug ? `/${slug}` : ''}`;
+  const url = `${appHost}${slug ? `/posts/${slug}` : ''}`;
   const description = 'フロントエンジニア、@shota1995mの個人ブログ&実験サイト';
   return (
     <NextHeadSeo
       title={title}
       description={description}
+      canonical={url}
       og={{
         title,
         description,
