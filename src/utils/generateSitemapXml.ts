@@ -23,7 +23,9 @@ export const generateSitemapXml = (): string => {
       <url>
         <loc>${appHost}/posts/${post.slug}</loc>
         <lastmod>${format(
-          new Date(post.frontMatter.date),
+          post.frontMatter.update
+            ? new Date(post.frontMatter.update)
+            : new Date(post.frontMatter.date),
           'yyyy-MM-dd',
         )}</lastmod>
         <changefreq>weekly</changefreq>
