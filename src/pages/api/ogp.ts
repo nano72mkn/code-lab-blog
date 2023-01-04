@@ -31,7 +31,7 @@ const ogp = async (
   res.status(200).json({
     title: ogp.title,
     domain: url.hostname,
-    favicon: `http://www.google.com/s2/favicons?sz=32&domain=${url.hostname}`,
+    favicon: `http://www.google.com/s2/favicons?sz=32&domain=https://${url.hostname}`,
     ogp: {
       ogTitle: ogp.ogp['og:title'] ? ogp.ogp['og:title'][0] : '',
       ogUrl: ogp.ogp['og:url'] ? ogp.ogp['og:url'][0] : '',
