@@ -19,15 +19,15 @@ Vercelを使えば一発ですがVercelを使わないで実装はできるの�
 AWSはちょっと触ったことがある初心者です。  
 結構難易度高そうだなと思いつつやっていきます。
 
-## 導入していく
+### 導入していく
 
-### next.jsをinit
+#### next.jsをinit
 
 ```
 $ npx create-next-app --example with-typescript-eslint-jest with-typescript-eslint-jest-app --use-npm
 ```
 
-### Serverless Framworkを導入
+#### Serverless Framworkを導入
 
 まずは、`Serverless Framework`をinstall
 `global`に入れるように書いてあるけど、プロジェクトに含めてみた。
@@ -46,12 +46,12 @@ SDK: 4.2.3
 Components: 3.11.0
 ```
 
-### AWS CLI の設定する
+#### AWS CLI の設定する
 
 次の工程調べてたら、AWS CLIの設定いろいろしなきゃみたいだった。
 とりあえず、AWSアカウントを作成して設定してみる（まじで初心者）
 
-#### aws configure
+##### aws configure
 `aws configure`を実行
 
 ```
@@ -69,19 +69,19 @@ Access Keyを聞かれたので、AWSのcliについて調べる....
 `IAM`でユーザー作ろうねってことみたいです。
 
 
-#### ポリシーの作成
+##### ポリシーの作成
 ポリシーの作成で必要な権限を設定.....
 
 必要な権限については[AWS Permissions for deployment](https://github.com/serverless-nextjs/serverless-next.js#aws-permissions-for-deployment)を参考にしていきます
 
 `sqs`の権限はISRを使うときは必須なので、今回は追加しています。
 
-#### ユーザーグループの作成
+##### ユーザーグループの作成
 
 適当に名前をつけて、先ほど作成したポリシーを選択し保存  
 基本的にカスタムドメインで必要なもの以外選択しました
 
-#### ユーザーの作成
+##### ユーザーの作成
 
 1. ユーザー名を適当に決める
 2. アクセスの種類は`プログラムによるアクセス`
@@ -94,7 +94,7 @@ Access Keyを聞かれたので、AWSのcliについて調べる....
 生成された`Access Key`と`Secret Access Key`をコピーしておいて...
 
 
-#### 再度`aws configure`する
+##### 再度`aws configure`する
 
 ```
 $ aws configure
@@ -110,7 +110,7 @@ $ export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 そして、exportも設定してここは完了です！
 
-### Serverless Next.js Componentを導入
+#### Serverless Next.js Componentを導入
 
 `serverless.yaml`を作成し...
 
@@ -122,7 +122,7 @@ myApp:
 componentを指定する
 今回はISR対応したいので`@sls-next/serverless-component@1.20.0-alpha.4`を指定
 
-### いったんデプロイしてみる
+#### いったんデプロイしてみる
 
 なんか、`serverless.yaml`に`inputs`を指定しているところが多いのですが、`Zero-config`を掲げてたと思うのでいけるんじゃない？という気持ちでやっちゃいます。
 
@@ -151,7 +151,7 @@ $ npx serverless
 Warningでてますが、ISR対応がまだベータ版なのでしかたなしですね。
 
 
-### ISR対応して確認していく
+#### ISR対応して確認していく
 
 まずは、`test/isr.tsx`を作成
 
@@ -178,7 +178,7 @@ export default Isr
 
 ```
 
-### デプロイ
+#### デプロイ
 
 ```
 503 ERROR
@@ -219,7 +219,7 @@ https://github.com/serverless-nextjs/serverless-next.js/pull/1028#issuecomment-8
 再度デプロイしたら正常に権限が適用され、問題なく動作することを確認しました！
 
 
-# 参考
+## 参考
 
 めっちゃ参考にさせてもらいました！
 ありがとうございます....!
