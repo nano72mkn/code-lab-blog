@@ -20,7 +20,14 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['www.google.com', 'blog.code-lab.xyz', 'localhost'],
+    domains: [
+      'www.google.com',
+      'blog.code-lab.xyz',
+      'localhost',
+      'res.cloudinary.com',
+      'cdn.blog.st-hatena.com',
+      'planning-poker-remix.code-lab.xyz',
+    ],
   },
 };
 

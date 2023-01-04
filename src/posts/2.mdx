@@ -6,7 +6,7 @@ tags: ["reactnative", "typescript", "eslint"]
 emoji: "📱"
 ---
 
-# ReactNativeの開発環境を作る - ESLint編
+## ReactNativeの開発環境を作る - ESLint編
 
 想定としては下記あればいいかなと思っています。
 
@@ -19,10 +19,10 @@ emoji: "📱"
 - lint-staged
 
 
-## Expo & TypeScript
+### Expo & TypeScript
 TypeScript対応は`expo-cli`でinitする時にTypeScriptを指定すればおkなのでskip
 
-## ESLint
+### ESLint
 
 ```
 $ npx eslint --init
@@ -135,7 +135,7 @@ Warning: React version not specified in eslint-plugin-react settings. See https:
 consoleに上記のワーニングが出ているので次のステップで直します。
 
 
-### .eslintrc.jsを修正
+#### .eslintrc.jsを修正
 
 - インデントが勝手に4に指定されているので2に直す
 
@@ -185,11 +185,11 @@ module.exports = {
 
 ```
 
-## hooksのeslint設定
+### hooksのeslint設定
 こいつをいれてみる！
 https://ja.reactjs.org/docs/hooks-rules.html#eslint-plugin
 
-### eslint-plugin-react-hooksを追加
+#### eslint-plugin-react-hooksを追加
 
 Expoが標準でyarnを使っているのでyarnで。
 
@@ -197,7 +197,7 @@ Expoが標準でyarnを使っているのでyarnで。
 $ yarn add -D eslint-plugin-react-hooks
 ```
 
-### .eslintrc.jsをまた修正
+#### .eslintrc.jsをまた修正
 
 ```javascript
 module.exports = {
@@ -247,12 +247,12 @@ module.exports = {
 
 ```
 
-# おわり
+## おわり
 これでeslntの設定はいったん終了。
 次にPretterの設定をします
 
 
-# 目次
+## 目次
 長いので、分ける
 
 - ESLint （この記事）

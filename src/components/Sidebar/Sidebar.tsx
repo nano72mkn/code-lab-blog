@@ -9,7 +9,7 @@ interface Props {
 
 export const Sidebar: React.FC<Props> = ({ tocData }) => {
   return (
-    <aside className="space-y-5 xl:w-1/4 md:w-2/5">
+    <aside className="space-y-5 xl:w-1/4 ">
       <Author />
 
       <Sns />

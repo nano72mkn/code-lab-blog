@@ -76,17 +76,19 @@ const components: MDXRemoteProps['components'] = {
   h1: (props) => (
     <h1 {...props} className="text-3xl font-bold mt-14 mb-10 pb-3 border-b-2" />
   ),
-  h2: (props) => <h2 {...props} className="text-2xl font-bold mt-10 mb-5" />,
-  h3: (props) => <h3 {...props} className="text-xl font-bold  mt-7 mb-3" />,
+  h2: (props) => (
+    <h2 {...props} className="text-2xl font-bold mt-10 mb-5 pb-3 border-b-2" />
+  ),
+  h3: (props) => <h3 {...props} className="text-xl font-bold mt-10 mb-5" />,
   h4: (props) => (
     <h4
       {...props}
       id={props.children?.toString()}
-      className="text-xl font-bold  mt-7 mb-3"
+      className="text-lg font-bold  mt-10 mb-3"
     />
   ),
-  h5: (props) => <h5 {...props} className="font-bold mt-7 mb-3" />,
-  h6: (props) => <h6 {...props} className="font-bold mt-7 mb-3" />,
+  h5: (props) => <h5 {...props} className="font-bold mt-10 mb-3" />,
+  h6: (props) => <h6 {...props} className="font-bold mt-10 mb-3" />,
   p: (props) =>
     props.children &&
     typeof props.children === 'string' &&
@@ -129,7 +131,7 @@ const components: MDXRemoteProps['components'] = {
 };
 
 const PostPage: NextPage<Props> = ({
-  frontMatter: { title, emoji, date, tags },
+  frontMatter: { title, emoji, date, update, tags },
   slug,
   mdxSource,
   tocData,
@@ -137,9 +139,9 @@ const PostPage: NextPage<Props> = ({
   return (
     <div>
       <Head title={title} slug={slug} />
-      <div className="flex items-center flex-col w-full my-10 p-10">
+      <div className="flex items-center flex-col w-full my-5 p-5">
         <div className="text-6xl mb-5">{emoji}</div>
-        <h1 className="text-3xl font-bold mb-10 text-center">{title}</h1>
+        <h1 className="text-3xl font-bold mb-5 text-center">{title}</h1>
         <div className="flex space-x-2">
           {tags &&
             tags.map((tag, index) => (
@@ -148,16 +150,32 @@ const PostPage: NextPage<Props> = ({
               </p>
             ))}
         </div>
-        <time
-          className="text-gray-500"
-          title={format(new Date(date), 'yyyy/MM/dd')}
-          dateTime={format(new Date(date), 'yyyy-MM-dd')}
-        >
-          {format(new Date(date), 'yyyy/MM/dd')}
-        </time>
+        <div className="flex space-x-3">
+          <p className="text-gray-500 p-0">
+            公開：
+            <time
+              title={format(new Date(date), 'yyyy/MM/dd')}
+              dateTime={format(new Date(date), 'yyyy-MM-dd')}
+            >
+              {format(new Date(date), 'yyyy/MM/dd')}
+            </time>
+          </p>
+
+          {update && (
+            <p className="text-gray-500">
+              更新：
+              <time
+                title={format(new Date(update), 'yyyy/MM/dd')}
+                dateTime={format(new Date(update), 'yyyy-MM-dd')}
+              >
+                {format(new Date(update), 'yyyy/MM/dd')}
+              </time>
+            </p>
+          )}
+        </div>
       </div>
-      <div className="md:flex md:space-x-5">
-        <main className="xl:w-3/4 md:w-3/5 mb-10 md:mb-0 md:p-10 p-5  shadow-md rounded-md bg-white">
+      <div className="lg:flex lg:space-x-5">
+        <main className="lg:w-3/4 mb-10 xl:mb-0 p-10 xl:p-10  shadow-md rounded-md bg-white">
           <article>
             <MDXRemote {...mdxSource} components={components} lazy />
           </article>

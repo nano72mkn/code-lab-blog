@@ -8,5 +8,6 @@ type PostFrontMatter = {
   published: boolean;
   tags: string[];
   date: string;
+  update?: string;
   emoji: string;
 };
