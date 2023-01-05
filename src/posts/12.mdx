@@ -6,7 +6,7 @@ tags: ["nextjs", "storybook", "prettier", "react"]
 emoji: "🐶"
 ---
 
-## 今回設定するもの
+# 今回設定するもの
 
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -17,9 +17,9 @@ emoji: "🐶"
 
 一応、完成品は[こちら](https://github.com/shota1995m/nextjs_boilerplate)
 
-## 設定をしていく
+# 設定をしていく
 
-### Next.js
+## Next.js
 
 ```
 $ npx create-next-app --typescript --use-npm
@@ -34,7 +34,7 @@ npmを使いたいのでオプションで`--use-npm`を指定しています
 `--typescript`を付与しているので、typescript対応も同時に完了です。
 
 
-### ESLint
+## ESLint
 nextjs11からnext lintが使用できます。
 
 ```
@@ -70,7 +70,7 @@ package.json に`next lint`を追加します
 
 https://nextjs.org/docs/basic-features/eslint
 
-### Prettier
+## Prettier
 
 [ReactNativeの開発環境メモ２ - Prettier編](/blog/4) の時と同じ設定で使います
 
@@ -84,7 +84,7 @@ https://nextjs.org/docs/basic-features/eslint
 }
 ```
 
-### StoryBook
+## StoryBook
 これは好みですが、自分は入れておきます！！  
 
 ```
@@ -93,7 +93,7 @@ $ npx -p @storybook/cli sb init --type react_scripts
 
 いろいろ生成されますが、storiesディレクトリは空にしておきます（いらないのでw）
 
-### husky & lint-staged
+## husky & lint-staged
 
 最後に`husky`と`lint-staged`をついか
 下記の記事参考にそのまんま実装....!!!

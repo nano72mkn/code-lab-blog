@@ -27,6 +27,8 @@ const nextConfig = {
       'res.cloudinary.com',
       'cdn.blog.st-hatena.com',
       'planning-poker-remix.code-lab.xyz',
+      'nextjs.org',
+      'typicode.github.io',
     ],
   },
 };

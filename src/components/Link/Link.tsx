@@ -23,10 +23,12 @@ export const Link: React.FC<Props> = ({ href, children }) => {
 
   if (!href) return <></>;
 
-  const url = new URL(href);
+  const isExternalLink = /^http/.test(href);
+
+  const url = isExternalLink ? new URL(href) : undefined;
 
   if (children === href) {
-    switch (url.host) {
+    switch (url?.host) {
       case 'twitter.com':
         const tweetId = getTweetId({ url: href });
         if (tweetId === undefined) break;
@@ -43,8 +45,7 @@ export const Link: React.FC<Props> = ({ href, children }) => {
     }
   }
 
-  const externalLink = /^http/.test(href);
-  if (externalLink) {
+  if (isExternalLink) {
     return (
       <a href={href} rel="noopener noreferrer" target="_blank">
         {Component}
