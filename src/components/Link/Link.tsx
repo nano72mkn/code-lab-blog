@@ -31,7 +31,12 @@ export const Link: React.FC<Props> = ({ href, children }) => {
         const tweetId = getTweetId({ url: href });
         if (tweetId === undefined) break;
         return (
-          <TwitterTweetEmbed tweetId={tweetId} options={{ align: 'center' }} />
+          <div className="my-10">
+            <TwitterTweetEmbed
+              tweetId={tweetId}
+              options={{ align: 'center' }}
+            />
+          </div>
         );
       default:
         Component = <OgpCard url={href} />;
