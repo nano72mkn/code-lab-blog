@@ -1,4 +1,7 @@
 import dynamic from 'next/dynamic';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
+
+import { getTweetId } from 'utils/getTweetId';
 
 const NextLink = dynamic(() => {
   const Component = import('next/link');
@@ -20,12 +23,29 @@ export const Link: React.FC<Props> = ({ href, children }) => {
 
   if (!href) return <></>;
 
+  const isExternalLink = /^http/.test(href);
+
+  const url = isExternalLink ? new URL(href) : undefined;
+
   if (children === href) {
-    Component = <OgpCard url={href} />;
+    switch (url?.host) {
+      case 'twitter.com':
+        const tweetId = getTweetId({ url: href });
+        if (tweetId === undefined) break;
+        return (
+          <div className="my-10">
+            <TwitterTweetEmbed
+              tweetId={tweetId}
+              options={{ align: 'center' }}
+            />
+          </div>
+        );
+      default:
+        Component = <OgpCard url={href} />;
+    }
   }
 
-  const externalLink = /^http/.test(href);
-  if (externalLink) {
+  if (isExternalLink) {
     return (
       <a href={href} rel="noopener noreferrer" target="_blank">
         {Component}
