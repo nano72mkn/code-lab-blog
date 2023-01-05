@@ -74,19 +74,47 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
 const components: MDXRemoteProps['components'] = {
   h1: (props) => (
-    <h1 {...props} className="text-3xl font-bold mt-14 mb-10 pb-3 border-b-2" />
-  ),
-  h2: (props) => <h2 {...props} className="text-2xl font-bold mt-10 mb-5" />,
-  h3: (props) => <h3 {...props} className="text-xl font-bold  mt-7 mb-3" />,
-  h4: (props) => (
-    <h4
+    <h1
       {...props}
-      id={props.children?.toString()}
+      id={props.id?.toLocaleLowerCase()}
+      className="text-3xl font-bold mt-14 mb-10 pb-3 border-b-2"
+    />
+  ),
+  h2: (props) => (
+    <h2
+      {...props}
+      id={props.id?.toLocaleLowerCase()}
+      className="text-2xl font-bold mt-10 mb-5"
+    />
+  ),
+  h3: (props) => (
+    <h3
+      {...props}
+      id={props.id?.toLocaleLowerCase()}
       className="text-xl font-bold  mt-7 mb-3"
     />
   ),
-  h5: (props) => <h5 {...props} className="font-bold mt-7 mb-3" />,
-  h6: (props) => <h6 {...props} className="font-bold mt-7 mb-3" />,
+  h4: (props) => (
+    <h4
+      {...props}
+      id={props.id?.toLocaleLowerCase()}
+      className="text-xl font-bold  mt-7 mb-3"
+    />
+  ),
+  h5: (props) => (
+    <h5
+      {...props}
+      id={props.id?.toLocaleLowerCase()}
+      className="font-bold mt-7 mb-3"
+    />
+  ),
+  h6: (props) => (
+    <h6
+      {...props}
+      id={props.id?.toLocaleLowerCase()}
+      className="font-bold mt-7 mb-3"
+    />
+  ),
   p: (props) =>
     props.children &&
     typeof props.children === 'string' &&
