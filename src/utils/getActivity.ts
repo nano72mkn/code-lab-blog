@@ -1,4 +1,5 @@
 import Parser from 'rss-parser';
+
 import type { ActivityType, Url } from 'types/TimelineTypes';
 
 export interface GetActivityProps {

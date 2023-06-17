@@ -1,4 +1,3 @@
-import { appHost } from 'config/app';
 import Link from 'next/link';
 
 export const Header: React.FC = () => {

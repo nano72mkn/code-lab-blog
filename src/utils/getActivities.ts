@@ -1,5 +1,6 @@
-import type { ActivityType, Url } from 'types/TimelineTypes';
 import { getActivity } from './getActivity';
+
+import type { ActivityType, Url } from 'types/TimelineTypes';
 
 export interface GetActivitiesProps {
   urls: Url[];

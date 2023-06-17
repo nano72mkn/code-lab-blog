@@ -1,7 +1,10 @@
-import matter from "gray-matter";
-import path from "path";
 import fs from 'fs';
+import path from "path";
+
 import { FC } from "react";
+
+import matter from "gray-matter";
+
 import { PostCard } from "components/PostCard";
 
 const Page: FC = () => {

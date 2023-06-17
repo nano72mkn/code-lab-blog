@@ -1,4 +1,5 @@
 import { ActivityCard } from 'components/ActivityCard';
+
 import { ActivityType } from 'types/TimelineTypes';
 
 interface ActivitiesProps {

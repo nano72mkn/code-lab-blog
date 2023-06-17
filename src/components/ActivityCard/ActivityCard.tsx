@@ -1,6 +1,7 @@
 import { format, formatDistanceToNow, subYears } from 'date-fns';
-import { ActivityType } from 'types/TimelineTypes';
 import Image from 'next/image';
+
+import { ActivityType } from 'types/TimelineTypes';
 
 interface ActivityCardProps {
   activity: ActivityType;

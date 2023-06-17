@@ -1,4 +1,5 @@
 import { Activities } from 'components/Activities';
+
 import { ActivityChronology as ActivityChronologyType } from 'utils/groupByYear';
 
 interface ActivityChronologyProps {
