@@ -47,15 +47,15 @@ export const Link: React.FC<Props> = ({ href, children }) => {
 
   if (isExternalLink) {
     return (
-      <a href={href} rel="noopener noreferrer" target="_blank">
+      <NextLink href={href} rel="noopener noreferrer" target="_blank">
         {Component}
-      </a>
+      </NextLink>
     );
   }
 
   return (
-    <NextLink href={href} prefetch={false} passHref>
-      <a>{Component}</a>
+    <NextLink href={href} prefetch={false}>
+      {Component}
     </NextLink>
   );
 };
