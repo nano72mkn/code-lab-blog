@@ -3,11 +3,10 @@ import Image from 'next/image';
 export const Author: React.FC = () => {
   return (
     <div className="flex space-x-4 p-5 shadow-md rounded-md bg-white">
-      <Image
+      <img
         src="/icon/icon.jpeg"
         width="50"
         height="50"
-        layout="fixed"
         className="rounded-full"
         alt="@shota1995mのアイコン画像"
       />

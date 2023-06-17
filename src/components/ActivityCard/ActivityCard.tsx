@@ -17,7 +17,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
     >
       <div className="flex items-center mb-2 overflow-hidden">
         <span className="flex items-center mr-2 w-4 h-4">
-          <Image
+          <img
             src={activity.favicon}
             width={15}
             height={15}

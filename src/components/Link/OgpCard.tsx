@@ -30,11 +30,10 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
           </div>
           <div className="flex items-center">
             <div className="mr-1">
-              <Image
+              <img
                 src={data.favicon}
                 width={12}
                 height={12}
-                layout="fixed"
                 alt={`${data.domain}のファビコン`}
               />
             </div>
@@ -43,12 +42,11 @@ export const OgpCard: React.FC<Props> = ({ url }) => {
         </div>
         {data.ogp.ogImage && (
           <div className="relative w-full xl:max-w-sm aspect-ogImage bg-slate-50">
-            <Image
+            <img
               src={data.ogp.ogImage}
               className="object-contain"
               width={793}
               height={500}
-              layout="fill"
               alt={data.title}
             />
           </div>
