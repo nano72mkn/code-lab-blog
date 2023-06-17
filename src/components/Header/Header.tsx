@@ -1,28 +1,29 @@
 import { appHost } from 'config/app';
+import Link from 'next/link';
 
 export const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between py-5 md:py-10">
-      <a href={appHost}>
+      <Link href="/">
         <h1 className="font-black text-2xl md:text-4xl">Code Lab 🤔</h1>
-      </a>
+      </Link>
       <nav>
         <ul className="flex space-x-6">
           <li>
-            <a
+            <Link
               className="transition hover:underline hover:text-gray-400"
-              href="https://code-lab.xyz"
+              href="/"
             >
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="transition underline font-bold hover:text-gray-400"
-              href={appHost}
+              href="/blog"
             >
               Blog
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
