@@ -14,7 +14,6 @@ import remarkGfm from 'remark-gfm';
 import { CodeBlock } from 'components/CodeBlock';
 import { Head } from 'components/Head';
 import { Link } from 'components/Link';
-import { Sidebar } from 'components/Sidebar';
 
 import type { GetStaticProps, NextPage } from 'next';
 import type { MDXRemoteProps } from 'next-mdx-remote';
@@ -178,7 +177,7 @@ const PostPage: NextPage<Props> = ({
             <MDXRemote {...mdxSource} components={components} lazy />
           </article>
         </main>
-        <Sidebar tocData={tocData} />
+        {/* <Sidebar tocData={tocData} /> */}
       </div>
     </div>
   );

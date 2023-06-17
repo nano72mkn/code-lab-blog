@@ -1,19 +1,21 @@
-import toc from 'markdown-toc';
+"use client";
+// import toc from 'markdown-toc';
 
 import { Author } from 'components/Author';
 import { Sns } from 'components/Sns';
 
 interface Props {
-  tocData: ReturnType<typeof toc>['json'];
+  content: string;
 }
 
-export const Sidebar: React.FC<Props> = ({ tocData }) => {
+export const Sidebar: React.FC<Props> = () => {
+  // const tocData = toc(content).json;
   return (
     <aside className="space-y-5 xl:w-1/4 ">
       <Author />
 
       <Sns />
-      {tocData && (
+      {/* {tocData && (
         <div className="md:sticky md:top-10 p-10 shadow-md rounded-md bg-white">
           <div className=" text-lg font-bold mb-5">もくじ</div>
           <ul className="space-y-3 pl-5">
@@ -38,7 +40,7 @@ export const Sidebar: React.FC<Props> = ({ tocData }) => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
     </aside>
   );
 };
