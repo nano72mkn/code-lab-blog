@@ -8,6 +8,7 @@ import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
 import { Article } from 'components/Article';
+import { Sidebar } from 'components/Sidebar';
 
 export async function generateStaticParams() {
   const postsPath = path.join(process.cwd(), 'src/posts');
@@ -83,7 +84,7 @@ export default async function PostPage({
         <main className="lg:w-3/4 mb-10 xl:mb-0 p-10 xl:p-10  shadow-md rounded-md bg-white">
           <Article mdxSource={mdxSource} />
         </main>
-        {/* <Sidebar content={content} /> */}
+        <Sidebar content={content} />
       </div>
     </div>
   );

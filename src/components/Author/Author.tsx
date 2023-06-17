@@ -1,13 +1,15 @@
 export const Author: React.FC = () => {
   return (
     <div className="flex space-x-4 p-5 shadow-md rounded-md bg-white">
-      <img
-        src="/icon/icon.jpeg"
-        width="50"
-        height="50"
-        className="rounded-full"
-        alt="@shota1995mのアイコン画像"
-      />
+      <div>
+        <img
+          src="/icon/icon.jpeg"
+          width="50"
+          height="50"
+          className="rounded-full"
+          alt="@shota1995mのアイコン画像"
+        />
+      </div>
       <div className="flex-1 space-y-2">
         <p className="font-bold text-lg">@shota1995m</p>
         <p className="text-xs leading-5">

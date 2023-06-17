@@ -8,7 +8,7 @@ interface Props {
   content: string;
 }
 
-export const Sidebar: React.FC<Props> = () => {
+export const Sidebar: React.FC<Props> = ({ content }) => {
   // const tocData = toc(content).json;
   return (
     <aside className="space-y-5 xl:w-1/4 ">
