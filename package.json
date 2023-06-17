@@ -16,7 +16,7 @@
     "markdown-toc": "^1.2.0",
     "next": "12.1.5",
     "next-head-seo": "^0.1.3",
-    "ogp-parser": "^0.6.0",
+    "ogp-parser": "^0.8.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-syntax-highlighter": "^15.5.0",
