@@ -7,18 +7,12 @@ interface Props {
 }
 
 export const OgpCard: React.FC<Props> = ({ url }) => {
-  const { data } = useSWR('/api/ogp?url=' + url, (url) =>
-    fetch(url).then((r) => r.json()),
+  const { data } = useSWR(
+    '/api/ogp?url=' + url,
+    (url) => fetch(url).then((r) => r.json()),
+    { suspense: true },
   );
 
-  if (!data) {
-    return (
-      <div className="my-10 border rounded-xl shadow-md animate-pulse flex content-center flex-col-reverse xl:flex-row">
-        <p className="break-all p-5 flex-1">{url}</p>
-        <div className="w-full xl:max-w-sm aspect-ogImage bg-slate-100"></div>
-      </div>
-    );
-  }
   return (
     <div className="my-10 border rounded-xl overflow-hidden shadow-md hover:shadow-sm transition hover:opacity-80">
       <div className="flex content-center flex-col-reverse xl:flex-row">

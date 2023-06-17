@@ -1,7 +1,8 @@
 import { MDXRemoteProps } from "next-mdx-remote";
-import Link from "next/link";
+
 
 import { CodeBlock } from "components/CodeBlock";
+import { Link } from "components/Link";
 
 export const mdxComponents: MDXRemoteProps['components'] = {
   h1: (props) => (

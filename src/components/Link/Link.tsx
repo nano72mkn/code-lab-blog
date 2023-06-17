@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 
 import { getTweetId } from 'utils/getTweetId';
@@ -43,7 +44,18 @@ export const Link: React.FC<Props> = ({ href, children }) => {
           </div>
         );
       default:
-        Component = <OgpCard url={href} />;
+        Component = (
+          <Suspense
+            fallback={
+              <div className="my-10 border rounded-xl shadow-md animate-pulse flex content-center flex-col-reverse xl:flex-row">
+                <p className="break-all p-5 flex-1">{href}</p>
+                <div className="w-full xl:max-w-sm aspect-ogImage bg-slate-100" />
+              </div>
+            }
+          >
+            <OgpCard url={href} />
+          </Suspense>
+        );
     }
   }
 
