@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export const Author: React.FC = () => {
   return (
     <div className="flex space-x-4 p-5 shadow-md rounded-md bg-white">

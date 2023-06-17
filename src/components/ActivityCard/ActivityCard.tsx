@@ -1,5 +1,4 @@
 import { format, formatDistanceToNow, subYears } from 'date-fns';
-import Image from 'next/image';
 
 import { ActivityType } from 'types/TimelineTypes';
 

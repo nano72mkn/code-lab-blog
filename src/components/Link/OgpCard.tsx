@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import useSWR from 'swr';
 
 interface Props {
