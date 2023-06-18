@@ -10,8 +10,9 @@ import { Sidebar } from 'components/Sidebar';
 import { PostFrontMatter } from 'types/PostType';
 
 export async function generateStaticParams() {
-  const postsPath = path.join(process.cwd(), 'src/posts');
+  const postsPath = path.join(process.cwd(), 'src/app/posts');
   const files = fs.readdirSync(postsPath);
+  console.log(files);
 
   const paths = files.map((filename) => ({
     slug: filename.replace('.mdx', ''),

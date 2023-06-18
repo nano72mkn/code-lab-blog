@@ -1,5 +1,5 @@
 "use client";
-// import toc from 'markdown-toc';
+import toc from 'markdown-toc';
 
 import { Author } from 'components/Author';
 import { Sns } from 'components/Sns';
@@ -9,7 +9,8 @@ interface Props {
 }
 
 export const Sidebar: React.FC<Props> = ({ content }) => {
-  // const tocData = toc(content).json;
+  const tocData = toc(content).json;
+  console.log(tocData);
   return (
     <aside className="space-y-5 xl:w-1/4 ">
       <Author />

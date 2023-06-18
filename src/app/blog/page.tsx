@@ -1,30 +1,33 @@
 import fs from 'fs';
 import path from "path";
 
-import { FC } from "react";
-
 import matter from "gray-matter";
 
 import { PostCard } from "components/PostCard";
 
 import { PostFrontMatter } from 'types/PostType';
 
-const Page: FC = () => {
-    const postsPath = path.join(process.cwd(), 'src/posts');
-    const files = fs.readdirSync(postsPath);
-    const posts = files.map((filename) => {
-      const markdownWithMeta = fs.readFileSync(
-        path.join(postsPath, filename),
-        'utf-8',
-      );
-      const { data } = matter(markdownWithMeta);
-      return {
-        frontMatter: data as PostFrontMatter,
-        slug: filename.replace('.mdx', ''),
-      };
-    });
+export async function Page() {
+  const postsPath = path.join(process.cwd(), 'src/app/posts');
+  const files = fs.readdirSync(postsPath);
 
-    posts.sort((a, b) =>
+  const posts = await Promise.all(files.map(async (filename) => {
+    const mdxFilePath = path.join(postsPath, filename, 'page.mdx');
+    // const meta = require(mdxFilePath);
+    // console.log(meta);
+    
+    const markdownWithMeta = fs.readFileSync(
+      mdxFilePath,
+      'utf-8',
+    );
+    const { data } = matter(markdownWithMeta);
+    return {
+      frontMatter: data as PostFrontMatter,
+      slug: filename,
+    };
+  }));
+
+    await posts.sort((a, b) =>
       new Date(b.frontMatter.date) > new Date(a.frontMatter.date) ? 1 : -1,
     );
     

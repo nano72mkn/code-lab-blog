@@ -5,15 +5,6 @@ interface Props {
 }
 
 export async function OgpCard({ url }: Props) {
-  // const { data } = useSWR(
-  //   '/api/ogp?url=' + url,
-  //   (url) => fetch(url).then((res) => res.json()),
-  //   { suspense: true },
-  // );
-
-  // const res = await fetch(url);
-  // const data = await res.json();
-
   if (!url) {
     return <></>;
   }
@@ -45,7 +36,7 @@ export async function OgpCard({ url }: Props) {
           <div className="relative w-full xl:max-w-sm aspect-ogImage bg-slate-50">
             <img
               src={data.ogp.ogImage}
-              className="object-contain"
+              className="object-cover w-full"
               width={793}
               height={500}
               alt={data.title}
