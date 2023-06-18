@@ -39,6 +39,7 @@ export default async function PostPage({
     mdxOptions: {
       remarkPlugins: [remarkGfm],
       rehypePlugins: [rehypeSlug],
+      development: true,
     },
   });
 
@@ -88,4 +89,4 @@ export default async function PostPage({
       </div>
     </div>
   );
-};
+}

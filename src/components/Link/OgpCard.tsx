@@ -1,17 +1,23 @@
-"use client"
-
-import useSWR from 'swr';
+import { getOgpData } from "utils/getOgpData";
 
 interface Props {
   url: string;
 }
 
-export const OgpCard: React.FC<Props> = ({ url }) => {
-  const { data } = useSWR(
-    '/api/ogp?url=' + url,
-    (url) => fetch(url).then((r) => r.json()),
-    { suspense: true },
-  );
+export async function OgpCard({ url }: Props) {
+  // const { data } = useSWR(
+  //   '/api/ogp?url=' + url,
+  //   (url) => fetch(url).then((res) => res.json()),
+  //   { suspense: true },
+  // );
+
+  // const res = await fetch(url);
+  // const data = await res.json();
+
+  if (!url) {
+    return <></>;
+  }
+  const data = await getOgpData(url);
 
   return (
     <div className="my-10 border rounded-xl overflow-hidden shadow-md hover:shadow-sm transition hover:opacity-80">

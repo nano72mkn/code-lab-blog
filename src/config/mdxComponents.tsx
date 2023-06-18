@@ -1,10 +1,8 @@
-import { MDXRemoteProps } from "next-mdx-remote";
-
-
-import { CodeBlock } from "components/CodeBlock";
+// import { CodeBlock } from "components/CodeBlock";
 import { Link } from "components/Link";
+import { MDXComponents } from "mdx/types";
 
-export const mdxComponents: MDXRemoteProps['components'] = {
+export const mdxComponents: MDXComponents = {
   h1: (props) => (
     <h1 {...props} className="text-3xl font-bold mt-14 mb-10 pb-3 border-b-2" />
   ),
@@ -27,7 +25,7 @@ export const mdxComponents: MDXRemoteProps['components'] = {
     ) : (
       <p {...props} />
     ),
-  pre: (props: any) => <CodeBlock {...props.children.props} />,
+  // pre: (props: any) => <CodeBlock {...props.children.props} />,
   blockquote: (props) => (
     <blockquote
       className="my-5 p-10 border-0 border-l-4 text-gray-700 bg-gray-100"

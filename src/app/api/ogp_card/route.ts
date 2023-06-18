@@ -6,7 +6,7 @@ import { appHost } from 'config/app';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function OgpCard(req: NextApiRequest, res: NextApiResponse) {
   try {
     GlobalFonts.registerFromPath(
       path.resolve('./public/fonts/MPLUSRounded1c-Bold.ttf'),
@@ -167,5 +167,3 @@ const OgpCard = async (req: NextApiRequest, res: NextApiResponse) => {
     res.end('Internal Server Error');
   }
 };
-
-export default OgpCard;

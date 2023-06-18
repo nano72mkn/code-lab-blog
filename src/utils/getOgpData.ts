@@ -1,34 +1,11 @@
 import ogpParser from 'ogp-parser';
 
-import type { NextApiRequest, NextApiResponse } from 'next';
+export const getOgpData = async (targetUrl: string) => {
+  const url = new URL(targetUrl);
 
-export type OgpResponseType = {
-  title: string;
-  domain: string;
-  favicon: string;
-  ogp: {
-    ogTitle: string;
-    ogUrl: string;
-    ogImage: string;
-    ogSiteName: string;
-  };
-  seo: {
-    description: string;
-  };
-};
-
-const ogp = async (
-  req: NextApiRequest,
-  res: NextApiResponse<OgpResponseType>,
-) => {
-  if (!req.query.url) {
-    res.status(500).end();
-  }
-
-  const url = new URL(req.query.url as string);
   const ogp = await ogpParser(url.href, { skipOembed: true });
 
-  res.status(200).json({
+  return {
     title: ogp.title,
     domain: url.hostname,
     favicon: `http://www.google.com/s2/favicons?sz=32&domain=https://${url.hostname}`,
@@ -41,7 +18,5 @@ const ogp = async (
     seo: {
       description: ogp.seo.description ? ogp.seo.description[0] : '',
     },
-  });
+  };
 };
-
-export default ogp;

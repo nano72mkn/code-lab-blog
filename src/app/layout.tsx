@@ -11,14 +11,14 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body>
-    <div className="bg-gray-50">
-      <div className="container mx-auto px-5">
-        <Header />
-        <div className="mb-20">{children}</div>
-        <Footer />
-      </div>
+        <div className="bg-gray-50">
+          <div className="container mx-auto px-5">
+            <Header />
+            <div className="mb-20">{children}</div>
+            <Footer />
+          </div>
         </div>
       </body>
     </html>

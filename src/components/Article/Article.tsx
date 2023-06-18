@@ -1,17 +1,21 @@
-"use client";
+import { FC, Suspense } from "react";
+
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote/rsc';
 
 import { mdxComponents } from "config/mdxComponents";
-import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
-import { FC } from "react";
 
 interface Props {
-    mdxSource: MDXRemoteSerializeResult<Record<string, unknown>>
+  mdxSource: MDXRemoteSerializeResult<Record<string, unknown>>
+//   mdxSource: string;
 }
 
 export const Article: FC<Props> = ({ mdxSource }) => {
   return (
     <article>
-      <MDXRemote {...mdxSource} components={mdxComponents} lazy />
+      <Suspense fallback={<>Loading...</>}>
+        {/* @ts-expect-error Server Component */}
+        <MDXRemote {...mdxSource} components={mdxComponents} />
+      </Suspense>
     </article>
   );
 };

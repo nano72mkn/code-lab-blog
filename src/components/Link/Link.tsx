@@ -1,20 +1,33 @@
-'use client';
-
-import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-import { TwitterTweetEmbed } from 'react-twitter-embed';
+
+// import dynamic from 'next/dynamic';
+
+import NextLink from 'next/link';
+// import { ErrorBoundary } from 'react-error-boundary';
+import { Tweet } from 'react-tweet';
+
+// import { ErrorFallback } from 'components/ErrorBoundary';
 
 import { getTweetId } from 'utils/getTweetId';
 
-const NextLink = dynamic(() => {
-  const Component = import('next/link');
-  return Component;
-});
 
-const OgpCard = dynamic(() => {
-  const Component = import('./OgpCard').then((modules) => modules.OgpCard);
-  return Component;
-});
+import { OgpCard } from './OgpCard';
+
+
+// const NextLink = dynamic(() => {
+//   const Component = import('next/link');
+//   return Component;
+// });
+
+// const OgpCard = dynamic(() => {
+//   const Component = import('./OgpCard').then((modules) => modules.OgpCard);
+//   return Component;
+// });
+
+// const Tweet = dynamic(() => {
+//   const Component = import('react-tweet').then((modules) => modules.Tweet);
+//   return Component;
+// });
 
 interface Props {
   href?: string;
@@ -36,11 +49,8 @@ export const Link: React.FC<Props> = ({ href, children }) => {
         const tweetId = getTweetId({ url: href });
         if (tweetId === undefined) break;
         return (
-          <div className="my-10">
-            <TwitterTweetEmbed
-              tweetId={tweetId}
-              options={{ align: 'center' }}
-            />
+          <div className="my-10" data-theme="light">
+            <Tweet id={tweetId} />
           </div>
         );
       default:
@@ -53,6 +63,7 @@ export const Link: React.FC<Props> = ({ href, children }) => {
               </div>
             }
           >
+            {/* @ts-expect-error Server Component */}
             <OgpCard url={href} />
           </Suspense>
         );

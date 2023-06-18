@@ -1,5 +1,3 @@
-"use client";
-
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import hybrid from 'react-syntax-highlighter/dist/cjs/styles/hljs/hybrid';
 
