@@ -3,6 +3,8 @@ import path from 'path';
 
 import matter from 'gray-matter';
 
+import { Post, PostFrontMatter } from 'types/PostType';
+
 export const getPostsData = (): Post[] => {
   const postsPath = path.join(process.cwd(), 'src/posts');
   const files = fs.readdirSync(postsPath);

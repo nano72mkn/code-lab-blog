@@ -55,8 +55,8 @@ export const Link: React.FC<Props> = ({ href, children }) => {
         );
       default:
         Component = (
-            // {/* @ts-expect-error Server Component */}
-            <OgpCard url={href} />
+          /* @ts-expect-error Server Component */
+          <OgpCard url={href} />
         );
     }
   }

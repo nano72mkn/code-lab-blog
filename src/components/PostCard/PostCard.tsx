@@ -1,5 +1,7 @@
 import { format, formatDistanceToNow, subYears } from 'date-fns';
 
+import { Post } from 'types/PostType';
+
 export const PostCard: React.FC<Post> = ({ slug, frontMatter }) => {
   const { title, date, tags, emoji } = frontMatter;
   return (

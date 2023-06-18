@@ -7,6 +7,8 @@ import matter from "gray-matter";
 
 import { PostCard } from "components/PostCard";
 
+import { PostFrontMatter } from 'types/PostType';
+
 const Page: FC = () => {
     const postsPath = path.join(process.cwd(), 'src/posts');
     const files = fs.readdirSync(postsPath);

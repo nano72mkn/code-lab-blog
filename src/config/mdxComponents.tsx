@@ -1,6 +1,7 @@
 // import { CodeBlock } from "components/CodeBlock";
-import { Link } from "components/Link";
 import { MDXComponents } from "mdx/types";
+
+import { Link } from "components/Link";
 
 export const mdxComponents: MDXComponents = {
   h1: (props) => (

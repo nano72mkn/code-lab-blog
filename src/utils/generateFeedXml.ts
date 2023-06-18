@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 import RSS from 'rss';
 
 import { appHost } from 'config/app';
+import { PostFrontMatter } from 'types/PostType';
 
 export const generateFeedXml = async () => {
   const feed = new RSS({

@@ -4,11 +4,10 @@ import path from 'path';
 import { format } from 'date-fns';
 import matter from 'gray-matter';
 // import { serialize } from 'next-mdx-remote/serialize';
-import rehypeSlug from 'rehype-slug';
-import remarkGfm from 'remark-gfm';
 
-import { Article } from 'components/Article';
 import { Sidebar } from 'components/Sidebar';
+
+import { PostFrontMatter } from 'types/PostType';
 
 export async function generateStaticParams() {
   const postsPath = path.join(process.cwd(), 'src/posts');
@@ -35,13 +34,13 @@ export default async function PostPage({
 
   const { data: frontMatter, content } = matter(markdownWithMeta);
   const { title, emoji, date, update, tags } = frontMatter as PostFrontMatter;
-  const mdxSource = await serialize(content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypeSlug],
-      development: true,
-    },
-  });
+  // const mdxSource = await serialize(content, {
+  //   mdxOptions: {
+  //     remarkPlugins: [remarkGfm],
+  //     rehypePlugins: [rehypeSlug],
+  //     development: true,
+  //   },
+  // });
 
   return (
     <div>
@@ -83,7 +82,7 @@ export default async function PostPage({
       </div>
       <div className="lg:flex lg:space-x-5">
         <main className="lg:w-3/4 mb-10 xl:mb-0 p-10 xl:p-10  shadow-md rounded-md bg-white">
-          <Article mdxSource={mdxSource} />
+          {/* <Article mdxSource={mdxSource} /> */}
         </main>
         <Sidebar content={content} />
       </div>

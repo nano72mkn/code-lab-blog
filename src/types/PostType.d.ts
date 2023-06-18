@@ -1,9 +1,9 @@
-type Post = {
+export type Post = {
   slug: string;
   frontMatter: PostFrontMatter;
 };
 
-type PostFrontMatter = {
+export type PostFrontMatter = {
   title: string;
   published: boolean;
   tags: string[];
