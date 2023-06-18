@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+// import { Suspense } from 'react';
 
 // import dynamic from 'next/dynamic';
 
@@ -55,17 +55,8 @@ export const Link: React.FC<Props> = ({ href, children }) => {
         );
       default:
         Component = (
-          <Suspense
-            fallback={
-              <div className="my-10 border rounded-xl shadow-md animate-pulse flex content-center flex-col-reverse xl:flex-row">
-                <p className="break-all p-5 flex-1">{href}</p>
-                <div className="w-full xl:max-w-sm aspect-ogImage bg-slate-100" />
-              </div>
-            }
-          >
-            {/* @ts-expect-error Server Component */}
+            // {/* @ts-expect-error Server Component */}
             <OgpCard url={href} />
-          </Suspense>
         );
     }
   }

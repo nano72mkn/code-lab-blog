@@ -3,7 +3,7 @@ import path from 'path';
 
 import { format } from 'date-fns';
 import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
+// import { serialize } from 'next-mdx-remote/serialize';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
