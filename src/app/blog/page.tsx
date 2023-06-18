@@ -7,7 +7,7 @@ import { PostCard } from "components/PostCard";
 
 import { PostFrontMatter } from 'types/PostType';
 
-export async function Page() {
+export default async function Page() {
   const postsPath = path.join(process.cwd(), 'src/app/posts');
   const files = fs.readdirSync(postsPath);
 
@@ -39,5 +39,3 @@ export async function Page() {
     </div>
   );
 }
-
-export default Page;
